@@ -1,0 +1,15 @@
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\Alife.exe.config
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Debug\Alife.csprojResolveAssemblyReference.cache
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Debug\Alife.Form1.resources
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Debug\Alife.Properties.Resources.resources
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Debug\Alife.csproj.GenerateResource.Cache
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\Alife.exe
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\Alife.pdb
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\OxyPlot.dll
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\OxyPlot.WindowsForms.dll
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\OxyPlot.pdb
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\OxyPlot.xml
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\OxyPlot.WindowsForms.pdb
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Debug\OxyPlot.WindowsForms.xml
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Debug\Alife.exe
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Debug\Alife.pdb
