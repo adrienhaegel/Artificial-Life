@@ -32,9 +32,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 0D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 2D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 0D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "0,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, "2,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, "0,0");
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 0D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 0D);
@@ -49,6 +49,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.nb_preds = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox_fertility_predator = new System.Windows.Forms.TextBox();
+            this.textBox_fertility_prey = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox_deathrate_predator = new System.Windows.Forms.TextBox();
+            this.textBox_deathrate_prey = new System.Windows.Forms.TextBox();
+            this.label_speed = new System.Windows.Forms.Label();
+            this.textBox_speed_predator = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox_speed_prey = new System.Windows.Forms.TextBox();
+            this.textBox_hunting_surface = new System.Windows.Forms.TextBox();
+            this.label_hunting_surface = new System.Windows.Forms.Label();
             this.textBox_Ly = new System.Windows.Forms.TextBox();
             this.label_Ly = new System.Windows.Forms.Label();
             this.textBox_Lx = new System.Windows.Forms.TextBox();
@@ -71,19 +84,6 @@
             this.label_niter = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox_hunting_surface = new System.Windows.Forms.TextBox();
-            this.label_hunting_surface = new System.Windows.Forms.Label();
-            this.textBox_speed_predator = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox_speed_prey = new System.Windows.Forms.TextBox();
-            this.label_speed = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBox_deathrate_predator = new System.Windows.Forms.TextBox();
-            this.textBox_deathrate_prey = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox_fertility_predator = new System.Windows.Forms.TextBox();
-            this.textBox_fertility_prey = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -119,6 +119,7 @@
             series1.Points.Add(dataPoint1);
             series1.Points.Add(dataPoint2);
             series1.Points.Add(dataPoint3);
+            series1.YValuesPerPoint = 2;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             series2.Color = System.Drawing.Color.Red;
@@ -244,6 +245,129 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 761);
             this.panel1.TabIndex = 10;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 356);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.TabIndex = 34;
+            this.label9.Text = "fertility";
+            // 
+            // textBox_fertility_predator
+            // 
+            this.textBox_fertility_predator.Location = new System.Drawing.Point(146, 353);
+            this.textBox_fertility_predator.Name = "textBox_fertility_predator";
+            this.textBox_fertility_predator.Size = new System.Drawing.Size(42, 20);
+            this.textBox_fertility_predator.TabIndex = 33;
+            this.textBox_fertility_predator.Text = "1";
+            this.textBox_fertility_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox_fertility_prey
+            // 
+            this.textBox_fertility_prey.Location = new System.Drawing.Point(90, 353);
+            this.textBox_fertility_prey.Name = "textBox_fertility_prey";
+            this.textBox_fertility_prey.Size = new System.Drawing.Size(42, 20);
+            this.textBox_fertility_prey.TabIndex = 32;
+            this.textBox_fertility_prey.Text = "0.002";
+            this.textBox_fertility_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 330);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "Death Rate";
+            // 
+            // textBox_deathrate_predator
+            // 
+            this.textBox_deathrate_predator.Location = new System.Drawing.Point(146, 327);
+            this.textBox_deathrate_predator.Name = "textBox_deathrate_predator";
+            this.textBox_deathrate_predator.Size = new System.Drawing.Size(42, 20);
+            this.textBox_deathrate_predator.TabIndex = 30;
+            this.textBox_deathrate_predator.Text = "0.003";
+            this.textBox_deathrate_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox_deathrate_prey
+            // 
+            this.textBox_deathrate_prey.Location = new System.Drawing.Point(90, 327);
+            this.textBox_deathrate_prey.Name = "textBox_deathrate_prey";
+            this.textBox_deathrate_prey.Size = new System.Drawing.Size(42, 20);
+            this.textBox_deathrate_prey.TabIndex = 29;
+            this.textBox_deathrate_prey.Text = "0.001";
+            this.textBox_deathrate_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_speed
+            // 
+            this.label_speed.AutoSize = true;
+            this.label_speed.Location = new System.Drawing.Point(13, 304);
+            this.label_speed.Name = "label_speed";
+            this.label_speed.Size = new System.Drawing.Size(38, 13);
+            this.label_speed.TabIndex = 28;
+            this.label_speed.Text = "Speed";
+            // 
+            // textBox_speed_predator
+            // 
+            this.textBox_speed_predator.Location = new System.Drawing.Point(146, 301);
+            this.textBox_speed_predator.Name = "textBox_speed_predator";
+            this.textBox_speed_predator.Size = new System.Drawing.Size(42, 20);
+            this.textBox_speed_predator.TabIndex = 27;
+            this.textBox_speed_predator.Text = "1";
+            this.textBox_speed_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_speed_predator.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(140, 279);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 17);
+            this.label6.TabIndex = 26;
+            this.label6.Text = "Predator";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label6.UseCompatibleTextRendering = true;
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(98, 281);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(28, 13);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Prey";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // textBox_speed_prey
+            // 
+            this.textBox_speed_prey.Location = new System.Drawing.Point(90, 301);
+            this.textBox_speed_prey.Name = "textBox_speed_prey";
+            this.textBox_speed_prey.Size = new System.Drawing.Size(42, 20);
+            this.textBox_speed_prey.TabIndex = 24;
+            this.textBox_speed_prey.Text = "1";
+            this.textBox_speed_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_speed_prey.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // textBox_hunting_surface
+            // 
+            this.textBox_hunting_surface.Location = new System.Drawing.Point(137, 505);
+            this.textBox_hunting_surface.Name = "textBox_hunting_surface";
+            this.textBox_hunting_surface.Size = new System.Drawing.Size(37, 20);
+            this.textBox_hunting_surface.TabIndex = 23;
+            this.textBox_hunting_surface.Text = "0.1";
+            this.textBox_hunting_surface.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_hunting_surface
+            // 
+            this.label_hunting_surface.AutoSize = true;
+            this.label_hunting_surface.Location = new System.Drawing.Point(38, 508);
+            this.label_hunting_surface.Name = "label_hunting_surface";
+            this.label_hunting_surface.Size = new System.Drawing.Size(82, 13);
+            this.label_hunting_surface.TabIndex = 22;
+            this.label_hunting_surface.Text = "Hunting surface";
             // 
             // textBox_Ly
             // 
@@ -456,129 +580,6 @@
             this.label3.Size = new System.Drawing.Size(99, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Iteration Time (ms) :";
-            // 
-            // textBox_hunting_surface
-            // 
-            this.textBox_hunting_surface.Location = new System.Drawing.Point(137, 505);
-            this.textBox_hunting_surface.Name = "textBox_hunting_surface";
-            this.textBox_hunting_surface.Size = new System.Drawing.Size(37, 20);
-            this.textBox_hunting_surface.TabIndex = 23;
-            this.textBox_hunting_surface.Text = "0.1";
-            this.textBox_hunting_surface.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label_hunting_surface
-            // 
-            this.label_hunting_surface.AutoSize = true;
-            this.label_hunting_surface.Location = new System.Drawing.Point(38, 508);
-            this.label_hunting_surface.Name = "label_hunting_surface";
-            this.label_hunting_surface.Size = new System.Drawing.Size(82, 13);
-            this.label_hunting_surface.TabIndex = 22;
-            this.label_hunting_surface.Text = "Hunting surface";
-            // 
-            // textBox_speed_predator
-            // 
-            this.textBox_speed_predator.Location = new System.Drawing.Point(146, 301);
-            this.textBox_speed_predator.Name = "textBox_speed_predator";
-            this.textBox_speed_predator.Size = new System.Drawing.Size(42, 20);
-            this.textBox_speed_predator.TabIndex = 27;
-            this.textBox_speed_predator.Text = "1";
-            this.textBox_speed_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox_speed_predator.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(140, 279);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 17);
-            this.label6.TabIndex = 26;
-            this.label6.Text = "Predator";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label6.UseCompatibleTextRendering = true;
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(98, 281);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(28, 13);
-            this.label7.TabIndex = 25;
-            this.label7.Text = "Prey";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // textBox_speed_prey
-            // 
-            this.textBox_speed_prey.Location = new System.Drawing.Point(90, 301);
-            this.textBox_speed_prey.Name = "textBox_speed_prey";
-            this.textBox_speed_prey.Size = new System.Drawing.Size(42, 20);
-            this.textBox_speed_prey.TabIndex = 24;
-            this.textBox_speed_prey.Text = "1";
-            this.textBox_speed_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox_speed_prey.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
-            // label_speed
-            // 
-            this.label_speed.AutoSize = true;
-            this.label_speed.Location = new System.Drawing.Point(13, 304);
-            this.label_speed.Name = "label_speed";
-            this.label_speed.Size = new System.Drawing.Size(38, 13);
-            this.label_speed.TabIndex = 28;
-            this.label_speed.Text = "Speed";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 330);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "Death Rate";
-            // 
-            // textBox_deathrate_predator
-            // 
-            this.textBox_deathrate_predator.Location = new System.Drawing.Point(146, 327);
-            this.textBox_deathrate_predator.Name = "textBox_deathrate_predator";
-            this.textBox_deathrate_predator.Size = new System.Drawing.Size(42, 20);
-            this.textBox_deathrate_predator.TabIndex = 30;
-            this.textBox_deathrate_predator.Text = "0.001";
-            this.textBox_deathrate_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox_deathrate_prey
-            // 
-            this.textBox_deathrate_prey.Location = new System.Drawing.Point(90, 327);
-            this.textBox_deathrate_prey.Name = "textBox_deathrate_prey";
-            this.textBox_deathrate_prey.Size = new System.Drawing.Size(42, 20);
-            this.textBox_deathrate_prey.TabIndex = 29;
-            this.textBox_deathrate_prey.Text = "0.001";
-            this.textBox_deathrate_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 356);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
-            this.label9.TabIndex = 34;
-            this.label9.Text = "fertility";
-            // 
-            // textBox_fertility_predator
-            // 
-            this.textBox_fertility_predator.Location = new System.Drawing.Point(146, 353);
-            this.textBox_fertility_predator.Name = "textBox_fertility_predator";
-            this.textBox_fertility_predator.Size = new System.Drawing.Size(42, 20);
-            this.textBox_fertility_predator.TabIndex = 33;
-            this.textBox_fertility_predator.Text = "0.001";
-            this.textBox_fertility_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox_fertility_prey
-            // 
-            this.textBox_fertility_prey.Location = new System.Drawing.Point(90, 353);
-            this.textBox_fertility_prey.Name = "textBox_fertility_prey";
-            this.textBox_fertility_prey.Size = new System.Drawing.Size(42, 20);
-            this.textBox_fertility_prey.TabIndex = 32;
-            this.textBox_fertility_prey.Text = "0.002";
-            this.textBox_fertility_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
