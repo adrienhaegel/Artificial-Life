@@ -1,0 +1,15 @@
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\Alife.exe.config
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\Alife.exe
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\Alife.pdb
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\OxyPlot.dll
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\OxyPlot.WindowsForms.dll
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\OxyPlot.pdb
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\OxyPlot.xml
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\OxyPlot.WindowsForms.pdb
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\bin\Release\OxyPlot.WindowsForms.xml
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.Form1.resources
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.Properties.Resources.resources
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.csproj.GenerateResource.Cache
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.exe
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.pdb
+C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.csprojResolveAssemblyReference.cache

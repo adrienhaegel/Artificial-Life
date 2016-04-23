@@ -35,5 +35,7 @@ namespace Alife
             this.rand = new Random();
         }
 
+        public int nbthreads = 4;
+
     }
 }

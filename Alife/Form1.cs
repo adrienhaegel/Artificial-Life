@@ -54,7 +54,7 @@ namespace Alife
 
             // Create a driver and assign a thread
             driver = new Driver(parameters);
-            WorkerThread = new Thread(driver.Run_test);
+            WorkerThread = new Thread(driver.Start);
             WorkerThread.Start();
 
             //Calls the graphic interface

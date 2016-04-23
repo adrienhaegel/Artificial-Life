@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public class Predator
+    public class Predator : Gridable, Animal
     {
         public static Parameters parameters;
         public Random rand;
@@ -14,6 +14,8 @@ namespace Alife
         public double y;
 
 
+        public int xindex;
+        public int yindex;
 
 
 
@@ -40,22 +42,20 @@ namespace Alife
             return new Predator(this.x, this.y);
         }
 
-        public bool Reproduce(List<Prey> preys)
+        public bool Reproduce(Grid<Prey> preys)
         {
-            if (preys.Count > 0)
-            {
+
+           Tuple<double,Prey> closestprey = preys.FindClosestinRadius(this.x, this.y, parameters.huntingarea);
+
+               
 
 
-                double min = Math.Sqrt(preys.Min(p => (p.x - x) * (p.x - this.x) + (p.y - this.y) * (p.y - this.y)));
-
-
-                if (min < parameters.huntingarea)
+                if (closestprey.Item1 < parameters.huntingarea)
                 {
-                    preys.Remove(
-                        preys.Find((p => Math.Abs(min - Math.Sqrt((p.x - x) * (p.x - this.x) + (p.y - this.y) * (p.y - this.y))) < 0.0001)));
+                    preys.Remove(closestprey.Item2);
                     return (rand.NextDouble() < parameters.fertilitypredator*parameters.timestep);
                 }
-            }
+            
 
             return false;
 
@@ -108,6 +108,42 @@ namespace Alife
         public bool Die()
         {
             return (rand.NextDouble() < parameters.deathratepredator * parameters.timestep);
+        }
+
+        public int Getxindex()
+        {
+            return xindex;
+        }
+
+        public int Getyindex()
+        {
+            return yindex;
+        }
+
+        public double Getx()
+        {
+            return this.x;
+        }
+
+        public double Gety()
+        {
+            return this.y;
+        }
+
+        public void Setx(double a)
+        {
+            this.x = a;
+        }
+
+        public void Sety(double a)
+        {
+            this.y = a;
+        }
+
+        public void Setindex(int xindex, int yindex)
+        {
+            this.xindex = xindex;
+            this.yindex = yindex;
         }
     }
 }

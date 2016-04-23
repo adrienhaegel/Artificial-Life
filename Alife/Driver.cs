@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alife
@@ -17,20 +18,27 @@ namespace Alife
 
         Parameters parameters;
 
-        private List<Prey> preys;
+        private Grid<Prey> preys;
         private List<Predator> predators;
 
         public double executiontime;
 
         public int Niter;
 
+
+
         public Driver(Parameters parameters)
         {
             this.parameters = parameters;
             Prey.parameters = parameters;
             Predator.parameters = parameters;
+            Grid<Prey>.parameters = parameters;
+
             stop_required = false;
-            preys = new List<Prey>();
+            
+           // preys = new Grid<Prey>((int)Math.Floor(parameters.Length_x/parameters.huntingarea),(int)Math.Floor(parameters.Length_x / parameters.huntingarea));
+            preys = new Grid<Prey>(10, 10);
+            Prey.preygrid = preys;
             predators = new List<Predator>();
             Niter = 0;
 
@@ -83,10 +91,9 @@ namespace Alife
         public void Reproduce()
         {
             List<Prey> newborn = new List<Prey>();
-            int nb = this.preys.Count;
-            foreach (var p in this.preys)
+            foreach (Prey p in this.preys.Iterator())
             {
-                if (p.Reproduce(nb))
+                if (p.Reproduce())
                 {
                     newborn.Add(p.Copy());
                 }
@@ -110,7 +117,7 @@ namespace Alife
 
         public void Move()
         {
-            foreach (Prey p in this.preys)
+            foreach (Prey p in this.preys.ToList())
             {
                 p.Move();
             }
@@ -120,9 +127,22 @@ namespace Alife
             }
         }
 
+      
+
+
+       
+
         public void Die()
         {
-            this.preys.RemoveAll(p => p.Die());
+            List<Prey> deadpreys = new List<Prey>();
+            foreach(Prey p in preys.Iterator())
+            {
+                if (p.Die())
+                {
+                    deadpreys.Add(p);
+                }
+            }
+            this.preys.RemoveRange(deadpreys);
             this.predators.RemoveAll(p => p.Die());
         }
 
@@ -132,6 +152,7 @@ namespace Alife
         {
             lock (lockiteration)
             {
+
 
                 var watch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -149,24 +170,26 @@ namespace Alife
 
 
 
-        public void Run_test()
+        public void Start()
         {
 
             Add_Random_Prey(parameters.initialprey);
          
             Add_Random_Predator(parameters.initialpredator);
 
+            Run();
+            
 
+        }
+
+        public void Run()
+        {
             while (!stop_required)
             {
-
                 System.Threading.Thread.Sleep(parameters.simulation_delay);
 
                 Iteration();
-
-
             }
-
         }
 
 
@@ -174,7 +197,7 @@ namespace Alife
         {
             lock (lockiteration)
             {
-                return new List<Prey>(this.preys);
+                return new List<Prey>(this.preys.ToList());
             }
 
         }

@@ -179,9 +179,9 @@
             // 
             // label_iteration_time
             // 
-            this.label_iteration_time.Location = new System.Drawing.Point(643, 19);
+            this.label_iteration_time.Location = new System.Drawing.Point(615, 19);
             this.label_iteration_time.Name = "label_iteration_time";
-            this.label_iteration_time.Size = new System.Drawing.Size(22, 17);
+            this.label_iteration_time.Size = new System.Drawing.Size(69, 17);
             this.label_iteration_time.TabIndex = 7;
             this.label_iteration_time.Text = "0";
             // 
@@ -575,7 +575,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(538, 19);
+            this.label3.Location = new System.Drawing.Point(510, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(99, 13);
             this.label3.TabIndex = 10;
