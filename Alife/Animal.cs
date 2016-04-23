@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    interface Animal
+    public interface Animal
     {
+       
 
-}
+        void Move();
+    }
 }

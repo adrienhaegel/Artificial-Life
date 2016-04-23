@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public class Prey : Animal
+    public class Prey : Animal,Gridable
     {
         public static Parameters parameters;
         public Random rand;
         public double x;
         public double y;
 
+        public int xindex;
+        public int yindex;
 
+        public static Grid<Prey> preygrid;
 
         public Prey()
         {
@@ -37,7 +40,7 @@ namespace Alife
             return new Prey(this.x, this.y);
         }
 
-        public bool Reproduce(int nb)
+        public bool Reproduce()
         {
             return (rand.NextDouble() < parameters.timestep*parameters.fertilityprey);
         }
@@ -52,7 +55,7 @@ namespace Alife
             double randNormalx =
                       Math.Sqrt(parameters.timestep)*   parameters.preyspeed * randStdNormalx; //random normal(mean,stdDev^2)
 
-            this.x += randNormalx;
+            double newx = this.x+randNormalx;
 
             double v1 = rand.NextDouble(); //these are uniform(0,1) random doubles
             double v2 = rand.NextDouble();
@@ -60,35 +63,82 @@ namespace Alife
                          Math.Sin(2.0 * Math.PI * v2); //random normal(0,1)
             double randNormaly =
                         Math.Sqrt(parameters.timestep) * parameters.preyspeed * randStdNormaly; //random normal(mean,stdDev^2)
-            this.y += randNormaly;
+            double newy = this.y + randNormaly;
 
-            Rebound();
+            double newx_cor;
+            double newy_cor;
+
+            Rebound(out newx_cor,out newy_cor,newx,newy);
+
+            preygrid.Update(this, newx_cor, newy_cor);
         }
 
-        private void Rebound()
+        private void Rebound(out double newx_cor,out double newy_cor,double x, double y)
         {
-            if (x < 0)
+            newx_cor = x;
+            newy_cor = y;
+
+            if (newx_cor < 0)
             {
-                this.x = -this.x;
+                newx_cor = -newx_cor;
             }
-            if(x > parameters.Length_x)
+            if(newx_cor > parameters.Length_x)
             {
-                this.x = 2*parameters.Length_x - this.x;
+                newx_cor = 2*parameters.Length_x - newx_cor;
             }
 
-            if (y < 0)
+            if (newy_cor  < 0)
             {
-                this.y = -this.y;
+                newy_cor = -newy_cor;
             }
-            if (y > parameters.Length_y)
+            if (newy_cor > parameters.Length_y)
             {
-                this.y = 2*parameters.Length_y - this.y;
+                newy_cor = 2 * parameters.Length_y - newy_cor;
             }
+
+                
+
         }
 
         public bool Die()
         {
             return (rand.NextDouble() < parameters.timestep * parameters.deathrateprey);
+        }
+
+        public int Getxindex()
+        {
+            return xindex;
+        }
+
+        public int Getyindex()
+        {
+            return yindex;
+        }
+
+        public double Getx()
+        {
+            return this.x;
+        }
+
+        public double Gety()
+        {
+            return this.y;
+        }
+
+        public void Setx(double a)
+        {
+            this.x = a;
+        }
+
+        public void Sety(double a)
+        {
+            this.y = a;
+        }
+
+        public void Setindex(int xindex, int yindex)
+        {
+            this.xindex = xindex;
+            this.yindex = yindex;
         }
     }
 }
