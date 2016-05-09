@@ -17,7 +17,8 @@ namespace Alife
         public int xindex;
         public int yindex;
 
-
+        public static Grid<Predator> predatorgrid;
+        public static Grid<Prey> preygrid;
 
         public Predator()
         {
@@ -42,72 +43,133 @@ namespace Alife
             return new Predator(this.x, this.y);
         }
 
-        public bool Reproduce(Grid<Prey> preys)
+        public Predator GetOffspring()
         {
+            return new Predator(this.x, this.y);
+        }
 
-           Tuple<double,Prey> closestprey = preys.FindClosestinRadius(this.x, this.y, parameters.huntingarea);
+        public bool Reproduce()
+        {
+            if (rand.NextDouble() < parameters.timestep)
+            {
+                Tuple<double, Prey> closestprey = preygrid.FindClosestinRadius(this.x, this.y, parameters.hunting_area);
 
-               
 
 
-                if (closestprey.Item1 < parameters.huntingarea)
+
+                if (closestprey.Item1 < parameters.hunting_area)
                 {
-                    preys.Remove(closestprey.Item2);
-                    return (rand.NextDouble() < parameters.fertilitypredator*parameters.timestep);
+                    preygrid.Remove(closestprey.Item2);
+                    return (rand.NextDouble() < parameters.hunting_fertility);
                 }
-            
-
+            }
+            else {
+                if (rand.NextDouble() < parameters.timestep * parameters.predator_fertility)
+                {
+                    return true;
+                }
+            }
             return false;
+          
+
 
         }
+
+        public double GetFromNormalDistrib(double mean, double deviation) //Generates a double from normal distribution. The distribution is truncated at -10 and 10 to avoid very high unexpected values.
+        {
+            double u1 = rand.NextDouble(); //these are uniform(0,1) random doubles
+            double u2 = rand.NextDouble();
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
+                         Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+
+            randStdNormal = Math.Max(randStdNormal, -10);
+            randStdNormal = Math.Min(randStdNormal, 10);
+
+            return mean + deviation * randStdNormal;
+        }
+
 
         public void Move()
         {
-            ; //reuse this if you are generating many
-            double u1 = rand.NextDouble(); //these are uniform(0,1) random doubles
-            double u2 = rand.NextDouble();
-            double randStdNormalx = Math.Sqrt(-2.0 * Math.Log(u1)) *
-                         Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-            double randNormalx =
-                      Math.Sqrt(parameters.timestep) * parameters.predatorspeed * randStdNormalx; //random normal(mean,stdDev^2)
+            if (parameters.predator_chemotaxis)
+            {
+                Tuple<double, Prey> closestprey = preygrid.FindClosestinRadius(this.x, this.y, parameters.predator_chemotaxis_area);
+                if (closestprey.Item1 < parameters.predator_chemotaxis_area)
+                {
 
-            this.x += randNormalx;
+                    double xdirection = (closestprey.Item2.x - this.x) / Math.Sqrt((closestprey.Item2.x - this.x) * (closestprey.Item2.x - this.x) + (closestprey.Item2.y - this.y) * (closestprey.Item2.y - this.y));
+                    double ydirection = (closestprey.Item2.y - this.y) / Math.Sqrt((closestprey.Item2.x - this.x) * (closestprey.Item2.x - this.x) + (closestprey.Item2.y - this.y) * (closestprey.Item2.y - this.y));
 
-            double v1 = rand.NextDouble(); //these are uniform(0,1) random doubles
-            double v2 = rand.NextDouble();
-            double randStdNormaly = Math.Sqrt(-2.0 * Math.Log(v1)) *
-                         Math.Sin(2.0 * Math.PI * v2); //random normal(0,1)
-            double randNormaly =
-                        Math.Sqrt(parameters.timestep)  * parameters.predatorspeed* randStdNormaly; //random normal(mean,stdDev^2)
-            this.y += randNormaly;
+                    double randNormalx = GetFromNormalDistrib(parameters.predator_chemotaxis_speed * parameters.timestep * xdirection, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
+                    double randNormaly = GetFromNormalDistrib(parameters.predator_chemotaxis_speed * parameters.timestep * ydirection, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
 
-            Rebound();
+                    double newx_cor;
+                    double newy_cor;
+                    Rebound(out newx_cor, out newy_cor, this.x + randNormalx, this.y + randNormaly); //Check if no boundaries and update position consequently
+
+                    predatorgrid.Update(this, newx_cor, newy_cor); //update positions
+                }
+                else
+                {
+                    double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
+                    double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
+
+                    double newx_cor;
+                    double newy_cor;
+                    Rebound(out newx_cor, out newy_cor, this.x + randNormalx, this.y + randNormaly); //Check if no boundaries and update position consequently
+
+                    predatorgrid.Update(this, newx_cor, newy_cor); //update positions
+                }
+            }
+            else
+            {
+                double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
+                double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
+
+                double newx_cor;
+                double newy_cor;
+                Rebound(out newx_cor, out newy_cor, this.x + randNormalx, this.y + randNormaly); //Check if no boundaries and update position consequently
+
+                predatorgrid.Update(this, newx_cor, newy_cor); //update positions
+            }
+
+
+
+
+
         }
 
-        private void Rebound()
+        private void Rebound(out double newx_cor, out double newy_cor, double x, double y)
         {
-            if (x < 0)
+            newx_cor = x;
+            newy_cor = y;
+
+            if (newx_cor < 0)
             {
-                this.x = -this.x;
+                newx_cor = -newx_cor;
             }
-            if (x > parameters.Length_x)
+            if (newx_cor > parameters.Length_x)
             {
-                this.x = 2 * parameters.Length_x - this.x;
+                newx_cor = 2 * parameters.Length_x - newx_cor;
             }
 
-            if (y < 0)
+            if (newy_cor < 0)
             {
-                this.y = -this.y;
+                newy_cor = -newy_cor;
             }
-            if (y > parameters.Length_y)
+            if (newy_cor > parameters.Length_y)
             {
-                this.y = 2 * parameters.Length_y - this.y;
+                newy_cor = 2 * parameters.Length_y - newy_cor;
             }
+
+
+
         }
 
-        public bool Die()
+
+        public bool Die() //This is the natural death rate of animals
         {
-            return (rand.NextDouble() < parameters.deathratepredator * parameters.timestep);
+            return (rand.NextDouble() < parameters.predator_deathrate * parameters.timestep);
         }
 
         public int Getxindex()

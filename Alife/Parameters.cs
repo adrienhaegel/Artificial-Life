@@ -19,16 +19,17 @@ namespace Alife
         public int initialprey;
         public int initialpredator;
 
-        public double preyspeed;
-        public double predatorspeed;
+        public double prey_speed;
+        public double predator_speed;
 
-        public double deathrateprey;
-        public double deathratepredator;
+        public double prey_deathrate;
+        public double predator_deathrate;
 
-        public double fertilityprey;
-        public double fertilitypredator;
+        public double prey_fertility;
+        public double predator_fertility;
 
-        public double huntingarea;
+        public double hunting_area;
+        public double hunting_fertility;
 
         public Parameters()
         {
@@ -37,5 +38,23 @@ namespace Alife
 
         public int nbthreads = 4;
 
+        public bool prey_competition;
+        public double prey_competition_area;
+        public double prey_competition_strength;
+        public bool predator_competition;
+        public double predator_competition_area;
+        public double predator_competition_strength;
+
+
+
+        public bool prey_chemotaxis;
+        public double prey_chemotaxis_speed;
+        public double prey_chemotaxis_area;
+
+        public bool predator_chemotaxis;
+        public double predator_chemotaxis_speed;
+        public double predator_chemotaxis_area;
+
+        public int result_frequency = 100;
     }
 }
