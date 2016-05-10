@@ -56,11 +56,23 @@
   <ItemGroup>
     <Compile Include="Animal.cs" />
     <Compile Include="Driver.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="SpatialGraph.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="SpatialGraph.Designer.cs">
+      <DependentUpon>SpatialGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BiomassGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BiomassGraph.Designer.cs">
+      <DependentUpon>BiomassGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="Grid.cs" />
     <Compile Include="Gridable.cs" />
@@ -69,8 +81,14 @@
     <Compile Include="Prey.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="BiomassGraph.resx">
+      <DependentUpon>BiomassGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpatialGraph.resx">
+      <DependentUpon>SpatialGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

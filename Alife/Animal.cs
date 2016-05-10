@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public interface Animal
+    public interface Animal //interface for animals Prey, Predator. Used in Grid<Animal>
     {
        
 

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public interface Gridable
+    //This interface implements the methods required for elements that can be put in a grid.
+    // An element in a grid should know the value of its indexes in the grid.
+    public interface Gridable 
     {
         int Getxindex();
         int Getyindex();
