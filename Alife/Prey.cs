@@ -8,8 +8,10 @@ namespace Alife
 {
     public class Prey : Animal,Gridable //This class implements a prey
     {
+        [ThreadStatic]
         public static Parameters parameters; //the parameters used
-        public Random rand; //a random number generator. WARNING: since a lot of them are declared at the same time, this should use the same object for all the animals.
+        [ThreadStatic]
+        public static Random rand; //a random number generator. WARNING: since a lot of them are declared at the same time, this should use the same object for all the animals.
 
         //positions
         public double x;
@@ -19,20 +21,25 @@ namespace Alife
         public int xindex;
         public int yindex;
 
+        public double age;
+
+
+
         //The grid containing all the preys
+        [ThreadStatic]
         public static Grid<Prey> preygrid;
+        [ThreadStatic]
         public static Grid<Predator> predatorgrid;
 
         public Prey() //constructor of random prey
         {
-            this.rand = parameters.rand;
             this.x = rand.NextDouble()*parameters.Length_x;
             this.y = rand.NextDouble() * parameters.Length_y;
+            this.age = 0;
         }
 
         public Prey(double x, double y) //constructor at a given position
         {
-            this.rand = parameters.rand;
             this.x = x;
             this.y = y;
 
@@ -50,7 +57,13 @@ namespace Alife
 
         public bool Reproduce() //the probability of reproducing is prey_fertility
         {
-            return (rand.NextDouble() < parameters.timestep*parameters.prey_fertility);
+
+            return (rand.NextDouble() < parameters.timestep*GetFertility());
+        }
+
+        public void Age()
+        {
+            this.age += parameters.timestep;
         }
 
         public double GetFromNormalDistrib(double mean, double deviation) //Generates a double from normal distribution. The distribution is truncated at -10 and 10 to avoid very high unexpected values.
@@ -77,8 +90,8 @@ namespace Alife
                     double xdirection = (closestpred.Item2.x - this.x) / Math.Sqrt((closestpred.Item2.x - this.x) * (closestpred.Item2.x - this.x) + (closestpred.Item2.y - this.y) * (closestpred.Item2.y - this.y));
                     double ydirection = (closestpred.Item2.y - this.y) / Math.Sqrt((closestpred.Item2.x - this.x) * (closestpred.Item2.x - this.x) + (closestpred.Item2.y - this.y) * (closestpred.Item2.y - this.y));
 
-                    double randNormalx = GetFromNormalDistrib(-parameters.prey_chemotaxis_speed * parameters.timestep *xdirection, Math.Sqrt(parameters.timestep) * parameters.prey_speed); //get brownian motion
-                    double randNormaly = GetFromNormalDistrib(-parameters.prey_chemotaxis_speed * parameters.timestep * ydirection, Math.Sqrt(parameters.timestep) * parameters.prey_speed);
+                    double randNormalx = GetFromNormalDistrib(-parameters.prey_chemotaxis_speed * GetSpeed_Multiplicator() * parameters.timestep * xdirection, Math.Sqrt(parameters.timestep) * parameters.prey_speed * GetSpeed_Multiplicator()); //get brownian motion
+                    double randNormaly = GetFromNormalDistrib(-parameters.prey_chemotaxis_speed * GetSpeed_Multiplicator() * parameters.timestep * ydirection, Math.Sqrt(parameters.timestep) * parameters.prey_speed * GetSpeed_Multiplicator());
 
                     double newx_cor;
                     double newy_cor;
@@ -88,8 +101,8 @@ namespace Alife
                 }
                 else
                 {
-                    double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed); //get brownian motion
-                    double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed);
+                    double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed * GetSpeed_Multiplicator()); //get brownian motion
+                    double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed * GetSpeed_Multiplicator());
 
                     double newx_cor;
                     double newy_cor;
@@ -100,8 +113,8 @@ namespace Alife
             }
             else
             {
-                double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed); //get brownian motion
-                double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed);
+                double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed * GetSpeed_Multiplicator()); //get brownian motion
+                double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.prey_speed * GetSpeed_Multiplicator());
 
                 double newx_cor;
                 double newy_cor;
@@ -141,7 +154,16 @@ namespace Alife
 
         public bool Die() //This is the natural death rate of animals
         {
-                return (rand.NextDouble() < parameters.timestep * parameters.prey_deathrate);
+            Age();
+            if (this.age > parameters.maxage)
+            {
+                return true;
+            }
+            else
+            {
+                return (rand.NextDouble() < parameters.timestep * GetMortality());
+            }
+                
         }
 
         //get set for x and y
@@ -179,6 +201,70 @@ namespace Alife
         {
             this.xindex = xindex;
             this.yindex = yindex;
+        }
+
+        public double GetSpeed_Multiplicator()
+        {
+            if (parameters.age_enabled)
+            {
+                int index = 0;
+                double ratio = 0;
+                GetAgeIndexandRatio(ref index, ref ratio);
+
+                return parameters.speed_age[index] * ratio + parameters.speed_age[index + 1] * (1 - ratio);
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        public double GetMortality()
+        {
+            if (parameters.age_enabled)
+            {
+                int index = 0;
+                double ratio = 0;
+                GetAgeIndexandRatio(ref index, ref ratio);
+
+                return parameters.deathrate_age[index] * ratio + parameters.deathrate_age[index + 1] * (1 - ratio);
+            }
+            else
+            {
+                return parameters.prey_deathrate;
+            }
+        }
+
+        public double GetFertility()
+        {
+            if (parameters.age_enabled)
+            {
+                int index =0;
+                double ratio=0;
+                GetAgeIndexandRatio(ref index, ref ratio);
+
+                return parameters.fertility_age[index] * ratio + parameters.fertility_age[index + 1] * (1 - ratio);
+            }
+            else
+            {
+                return parameters.prey_fertility;
+            }
+        }
+
+        public void GetAgeIndexandRatio(ref int index, ref double ratio)
+        {
+            if (this.age >= parameters.maxage)
+            {
+                index = parameters.age_categories-2;
+                ratio = 0;
+            }
+            else
+            {
+                index = (int)Math.Floor(this.age * (parameters.age_categories-1) / (parameters.maxage));
+                ratio = 1 - ((this.age * parameters.age_categories / parameters.maxage) - index);
+
+            }
+
         }
     }
 }

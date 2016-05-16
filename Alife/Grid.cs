@@ -11,6 +11,7 @@ namespace Alife
     // Compartimenting all the animals in an array (in spatial bins) allow a fast nearest neighbour retrieval.
     public class Grid<T> where T : Gridable
     {
+
         public static Parameters parameters;
 
         private int Nx;
