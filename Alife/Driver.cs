@@ -10,7 +10,8 @@ namespace Alife
 
     public class Driver  //This is the main class where all the calculations are done. 
     {
-        public static readonly object lockiteration = new object(); //LOCK for threading: is locked when the driver is in an iteration, is freed at the end of each iteration.
+  
+        public object lockiteration; //LOCK for threading: is locked when the driver is in an iteration, is freed at the end of each iteration.
 
         private volatile bool stop_required; // The driver has been asked to stop. Will terminate once the iteration is complete.
 
@@ -30,23 +31,21 @@ namespace Alife
         public int result_counter; //This counter is used to return the results of the algorithm after a given nb of iterations.
         public Queue<Result> queueresults;
 
+        int image_counter = 0;
+
         public class Result
         {
             public double time;
             public double preybiomass;
             public double predatorbiomass;
-            public List<Prey> preylist;
-            public List<Predator> predatorlist;
+           
         }
 
-        public void ge()
-        {
-
-        }
 
         //Constructor
         public Driver(Parameters parameters)
         {
+            lockiteration = new object();
             //set the parameters
             SetParameters(parameters);
 
@@ -66,6 +65,7 @@ namespace Alife
             executiontime = 0;
             result_counter = 0;
             queueresults = new Queue<Result>();
+            image_counter = 0;
         }
 
         public void SetParameters(Parameters parameters) //sets all the static references to parameters in all the classes
@@ -75,6 +75,8 @@ namespace Alife
             Predator.parameters = parameters;
             Grid<Prey>.parameters = parameters;
             Grid<Predator>.parameters = parameters;
+            Prey.rand = parameters.rand;
+            Predator.rand = parameters.rand;
         }
 
         public void Update_parameters(Parameters newparameters) //Update the parameters, this is called from outside the thread
@@ -143,14 +145,25 @@ namespace Alife
                 watch.Stop();
                 this.executiontime = watch.ElapsedMilliseconds;
                 Niter += 1;
+                
+               
                 this.currenttime += parameters.timestep;
-                result_counter += 1;
-                if (result_counter == parameters.result_frequency)
+                if (parameters.final_time_stop)
                 {
-                    result_counter = 0;
-                    Add_Result_to_Queue();
+                    if (this.currenttime > parameters.final_time)
+                    {
+                        Require_Stop();
+                    }
                 }
+
             }
+
+            if (result_counter == 0)
+            {
+                result_counter = parameters.result_frequency;
+                Add_Result_to_Queue();
+            }
+            result_counter -= 1;
         }
 
         public void Add_Result_to_Queue()
@@ -159,13 +172,35 @@ namespace Alife
             res.preybiomass = ReturnPreyBiomass();
             res.predatorbiomass = ReturnPredatorBiomass();
             res.time = ReturnCurrentTime();
-            res.preylist = Return_Preys_UI();
-            res.predatorlist = Return_Preds_UI();
+
+            Export_Spatial_Screenshot();
+
+            
             queueresults.Enqueue(res);
-            if (queueresults.Count > 100000)
-            {
-                queueresults.Clear();
-            }
+
+
+        }
+
+        public void Export_Spatial_Screenshot()
+        {
+
+            System.Windows.Forms.DataVisualization.Charting.Chart chart;
+            chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+
+
+            System.IO.Directory.CreateDirectory(parameters.fullpath + "\\images\\");
+
+
+
+            SpatialGraphToFile imageform = new SpatialGraphToFile(Return_Preys_UI(), Return_Preds_UI(), ReturnCurrentTime() ,parameters, image_counter, parameters.fullpath);
+
+
+                image_counter++;
+
+
+            
+        
+
         }
 
         public void Reproduce() //Reproduce preys and predators. Natural birth + hunting
@@ -187,7 +222,8 @@ namespace Alife
 
             foreach (Predator p in this.predators.Iterator())
             {
-                if (p.Reproduce())//If the prey p gets the chance to reproduce, add the offspring.
+                p.HuntAndReproduce();
+                if (p.Birth())//If the prey p gets the chance to reproduce, add the offspring.
                 {
                     newbornpred.Add(p.GetOffspring());
                 }
@@ -317,6 +353,7 @@ namespace Alife
 
         public void Run() // Run the iteration, returns if required
         {
+            SetParameters(parameters);
             while (!stop_required) //the iterations stops if this is required
             {
                 System.Threading.Thread.Sleep(parameters.simulation_delay); //used to artificially slow the simulation
@@ -329,7 +366,12 @@ namespace Alife
         {
             lock (lockiteration) //The List should not be modified while it is returned to the UI: Only between iterations
             {
-                return new List<Prey>(this.preys.ToList());
+                List<Prey> list = new List<Prey>();
+                foreach(Prey p in this.preys.ToList())
+                {
+                    list.Add(p.Copy());
+                }
+                return list;
             }
         }
 
@@ -347,7 +389,12 @@ namespace Alife
         {
             lock (lockiteration) //The List should not be modified while it is returned to the UI: Only between iterations
             {
-                return new List<Predator>(this.predators.ToList());
+                List<Predator> list = new List<Predator>();
+                foreach (Predator p in this.predators.ToList())
+                {
+                    list.Add(p.Copy());
+                }
+                return list;
             }
 
         }

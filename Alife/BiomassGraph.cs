@@ -70,12 +70,18 @@ namespace Alife
             update_timer.Stop();
             lock (closing_lock)
             {
+                queue = new LinkedList<Biomasspoint>();
+                
+                foreach (Driver.Result v in driver.queueresults)
+                {
+                    queue.AddLast(new Biomasspoint(v.preybiomass, v.predatorbiomass, v.time));
+                }
+                
 
-            
-            Biomasspoint newpoint = new Biomasspoint(driver.ReturnPreyBiomass(), driver.ReturnPredatorBiomass(), driver.ReturnCurrentTime());
-            queue.AddLast(newpoint);
+            //Biomasspoint newpoint = new Biomasspoint(driver.ReturnPreyBiomass(), driver.ReturnPredatorBiomass(), driver.ReturnCurrentTime());
+            //queue.AddLast(newpoint);
 
-            List<Biomasspoint> pointstoremove = queue.Where(p => p.time < newpoint.time - timeinterval*1.1).ToList();
+            List<Biomasspoint> pointstoremove = queue.Where(p => p.time < queue.Last.Value.time - timeinterval*1.1).ToList();
                
             foreach(var item in pointstoremove)
             {
@@ -85,7 +91,7 @@ namespace Alife
                 try
                 {
                     //chart1.ChartAreas[0].AxisX.Maximum = chart1.ChartAreas[0].AxisX.Minimum + timeinterval * 1.1;
-                    chart1.ChartAreas[0].AxisX.Maximum = timeinterval / 10 * Math.Ceiling(10 * newpoint.time / timeinterval);
+                    chart1.ChartAreas[0].AxisX.Maximum = timeinterval / 10 * Math.Ceiling(10 * queue.Last.Value.time / timeinterval);
                     //chart1.ChartAreas[0].AxisX.Minimum = timeinterval/10 * Math.Floor(10*queue.ElementAt(0).time / timeinterval);
                     chart1.ChartAreas[0].AxisX.Minimum = Math.Max(0, chart1.ChartAreas[0].AxisX.Maximum - timeinterval);
 
@@ -108,9 +114,9 @@ namespace Alife
                         predserie.AddXY(q.time, q.predbiomass);
                         preypredserie.AddXY(q.preybiomass, q.predbiomass * 10);
                     }
-
+                    
                 }
-                catch
+                catch(Exception exc)
                 {
 
                 }

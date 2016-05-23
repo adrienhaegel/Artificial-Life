@@ -123,7 +123,7 @@ namespace Alife
             this.textBox_refreshrate.Name = "textBox_refreshrate";
             this.textBox_refreshrate.Size = new System.Drawing.Size(100, 20);
             this.textBox_refreshrate.TabIndex = 5;
-            this.textBox_refreshrate.Text = "100";
+            this.textBox_refreshrate.Text = "1000";
             // 
             // button_update
             // 
