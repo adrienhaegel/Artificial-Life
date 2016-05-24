@@ -105,7 +105,7 @@ namespace Alife
         {
             lock (lockiteration) //is locked to avoid a change of parameters during an iteration
             {
-                for (int i = 1; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     preys.Add(new Prey());
                 }
@@ -116,7 +116,7 @@ namespace Alife
         {
             lock (lockiteration) //is locked to avoid a change of parameters during an iteration
             {
-                for (int i = 1; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     predators.Add(new Predator());
                 }

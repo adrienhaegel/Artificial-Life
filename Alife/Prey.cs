@@ -35,7 +35,7 @@ namespace Alife
         {
             this.x = rand.NextDouble()*parameters.Length_x;
             this.y = rand.NextDouble() * parameters.Length_y;
-            this.age = 0;
+            this.age = rand.Next((int)parameters.maxage);
         }
 
         public Prey(double x, double y) //constructor at a given position
@@ -205,50 +205,34 @@ namespace Alife
 
         public double GetSpeed_Multiplicator()
         {
-            if (parameters.age_enabled)
-            {
                 int index = 0;
                 double ratio = 0;
                 GetAgeIndexandRatio(ref index, ref ratio);
 
                 return parameters.speed_age[index] * ratio + parameters.speed_age[index + 1] * (1 - ratio);
-            }
-            else
-            {
-                return 1;
-            }
+
         }
 
         public double GetMortality()
         {
-            if (parameters.age_enabled)
-            {
+ 
                 int index = 0;
                 double ratio = 0;
                 GetAgeIndexandRatio(ref index, ref ratio);
 
                 return parameters.deathrate_age[index] * ratio + parameters.deathrate_age[index + 1] * (1 - ratio);
-            }
-            else
-            {
-                return parameters.prey_deathrate;
-            }
+
         }
 
         public double GetFertility()
         {
-            if (parameters.age_enabled)
-            {
+
                 int index =0;
                 double ratio=0;
                 GetAgeIndexandRatio(ref index, ref ratio);
 
                 return parameters.fertility_age[index] * ratio + parameters.fertility_age[index + 1] * (1 - ratio);
-            }
-            else
-            {
-                return parameters.prey_fertility;
-            }
+
         }
 
         public void GetAgeIndexandRatio(ref int index, ref double ratio)
