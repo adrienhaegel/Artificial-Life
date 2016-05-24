@@ -84,13 +84,11 @@ namespace Alife
         public string fullpath;
 
         public int age_categories = 5;
-        public bool age_enabled;
         public double maxage;
         public double[] deathrate_age;
         public double[] fertility_age;
         public double[] speed_age;
 
-        public bool hunting_limitation;
         public double time_between_hunts = 0;
         public double gestation = 0;
         public double time_between_reproduction = 0;
@@ -159,17 +157,17 @@ namespace Alife
             p.path = path;
             p.fullpath = fullpath;
 
-            p.age_enabled = age_enabled;
+
             deathrate_age.CopyTo(p.deathrate_age, 0);
             fertility_age.CopyTo(p.fertility_age, 0);
             speed_age.CopyTo(p.speed_age, 0);
 
             p.maxage = maxage;
 
-            p.hunting_limitation = hunting_limitation;
+
             p.time_between_hunts = time_between_hunts;
             p.gestation = gestation;
-                    p.time_between_reproduction = time_between_reproduction;
+            p.time_between_reproduction = time_between_reproduction;
 
             return p;
         }
@@ -178,6 +176,8 @@ namespace Alife
         {
             string s = "";
             s += "Lx : " + this.Length_x + "  Ly : " + this.Length_y + "    timestep : " + this.timestep + Environment.NewLine;
+
+
             s += " fertility  | deathrate " + " Prey : " + this.prey_fertility + " | " + this.prey_deathrate + " Predator : " + this.predator_fertility + " | " + this.predator_deathrate + Environment.NewLine;
             s += "hunting area : " + hunting_area + "    hunting fertility : " + hunting_fertility + Environment.NewLine;
 
@@ -221,6 +221,14 @@ namespace Alife
 
 
             s += "ratio : " + ratio.ToString("F2") + "  prey eq : " + prey_eq.ToString("F2") + "   pred eq : " + pred_eq.ToString("F2") + Environment.NewLine;
+
+            s += "Prey fertility (age)  : " + fertility_age[0].ToString() +" | "+ fertility_age[1].ToString() + " | " + fertility_age[2].ToString() + " | " + fertility_age[3].ToString() + " | " + fertility_age[4].ToString()  + Environment.NewLine;
+            s += "Prey mortality(age)  : " +  deathrate_age[0].ToString() + " | " + deathrate_age[1].ToString() + " | " + deathrate_age[2].ToString() + " | " + deathrate_age[3].ToString() + " | " + deathrate_age[4].ToString() + Environment.NewLine;
+            s += "Prey speed (age)  : " + speed_age[0].ToString() + " | " + speed_age[1].ToString() + " | " + speed_age[2].ToString() + " | " + speed_age[3].ToString() + " | " + speed_age[4].ToString() + Environment.NewLine;
+
+            s += "Time between hunts : " + time_between_hunts.ToString() + Environment.NewLine;
+            s += "Gestation : " + gestation.ToString() + Environment.NewLine;
+            s += "Time between reproductions : " +time_between_reproduction.ToString() + Environment.NewLine;
 
             return s;
         }

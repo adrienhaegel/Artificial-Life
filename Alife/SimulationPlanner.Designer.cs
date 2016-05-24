@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.label_nb_preys = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,24 +58,23 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox_initvalue_eq = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox_name = new System.Windows.Forms.TextBox();
             this.textBox_final_time = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label_initial_prey = new System.Windows.Forms.Label();
             this.textBox_initial_prey = new System.Windows.Forms.TextBox();
-            this.textBox_Add_prey = new System.Windows.Forms.TextBox();
             this.label_lx = new System.Windows.Forms.Label();
             this.textBox_Lx = new System.Windows.Forms.TextBox();
-            this.button_add_animals = new System.Windows.Forms.Button();
             this.textBox_time_step = new System.Windows.Forms.TextBox();
             this.label_time_step = new System.Windows.Forms.Label();
             this.label_initial_pred = new System.Windows.Forms.Label();
             this.textBox_initial_predator = new System.Windows.Forms.TextBox();
-            this.textBox_Add_pred = new System.Windows.Forms.TextBox();
             this.label_Ly = new System.Windows.Forms.Label();
             this.textBox_Ly = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox_age_dependency = new System.Windows.Forms.CheckBox();
             this.label_prey_competiton_strength = new System.Windows.Forms.Label();
             this.textBox_Prey_competition_strength = new System.Windows.Forms.TextBox();
             this.textBox_hunting_fertility = new System.Windows.Forms.TextBox();
@@ -138,13 +137,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.dataGridView_simulations = new System.Windows.Forms.DataGridView();
-            this.textBox_path = new System.Windows.Forms.TextBox();
-            this.button_change_directory = new System.Windows.Forms.Button();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.timer_simulation_update = new System.Windows.Forms.Timer(this.components);
-            this.textBox_information = new System.Windows.Forms.TextBox();
-            this.textBox_subfolder = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
             this.Simulation_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.namecol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -154,6 +146,19 @@
             this.button_spatial = new System.Windows.Forms.DataGridViewButtonColumn();
             this.button_biomass_graph = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.textBox_path = new System.Windows.Forms.TextBox();
+            this.button_change_directory = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.timer_simulation_update = new System.Windows.Forms.Timer(this.components);
+            this.textBox_information = new System.Windows.Forms.TextBox();
+            this.textBox_subfolder = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.textBox_time_between_hunts = new System.Windows.Forms.TextBox();
+            this.textBox_time_between_reproductions = new System.Windows.Forms.TextBox();
+            this.textBox_gestation = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -428,21 +433,19 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBox_initvalue_eq);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.textBox_name);
             this.tabPage1.Controls.Add(this.textBox_final_time);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label_initial_prey);
             this.tabPage1.Controls.Add(this.textBox_initial_prey);
-            this.tabPage1.Controls.Add(this.textBox_Add_prey);
             this.tabPage1.Controls.Add(this.label_lx);
             this.tabPage1.Controls.Add(this.textBox_Lx);
-            this.tabPage1.Controls.Add(this.button_add_animals);
             this.tabPage1.Controls.Add(this.textBox_time_step);
             this.tabPage1.Controls.Add(this.label_time_step);
             this.tabPage1.Controls.Add(this.label_initial_pred);
             this.tabPage1.Controls.Add(this.textBox_initial_predator);
-            this.tabPage1.Controls.Add(this.textBox_Add_pred);
             this.tabPage1.Controls.Add(this.label_Ly);
             this.tabPage1.Controls.Add(this.textBox_Ly);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -452,6 +455,19 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Init";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_initvalue_eq
+            // 
+            this.checkBox_initvalue_eq.AutoSize = true;
+            this.checkBox_initvalue_eq.Checked = true;
+            this.checkBox_initvalue_eq.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_initvalue_eq.Location = new System.Drawing.Point(14, 27);
+            this.checkBox_initvalue_eq.Name = "checkBox_initvalue_eq";
+            this.checkBox_initvalue_eq.Size = new System.Drawing.Size(202, 17);
+            this.checkBox_initvalue_eq.TabIndex = 26;
+            this.checkBox_initvalue_eq.Text = "Use equilibrium values for initialisation";
+            this.checkBox_initvalue_eq.UseVisualStyleBackColor = true;
+            this.checkBox_initvalue_eq.CheckedChanged += new System.EventHandler(this.checkBox_initvalue_eq_CheckedChanged);
             // 
             // label4
             // 
@@ -475,7 +491,7 @@
             this.textBox_final_time.Name = "textBox_final_time";
             this.textBox_final_time.Size = new System.Drawing.Size(46, 20);
             this.textBox_final_time.TabIndex = 23;
-            this.textBox_final_time.Text = "10000";
+            this.textBox_final_time.Text = "50000";
             // 
             // label3
             // 
@@ -489,7 +505,7 @@
             // label_initial_prey
             // 
             this.label_initial_prey.AutoSize = true;
-            this.label_initial_prey.Location = new System.Drawing.Point(51, 15);
+            this.label_initial_prey.Location = new System.Drawing.Point(9, 51);
             this.label_initial_prey.Name = "label_initial_prey";
             this.label_initial_prey.Size = new System.Drawing.Size(45, 13);
             this.label_initial_prey.TabIndex = 5;
@@ -497,26 +513,18 @@
             // 
             // textBox_initial_prey
             // 
-            this.textBox_initial_prey.Location = new System.Drawing.Point(54, 31);
+            this.textBox_initial_prey.Enabled = false;
+            this.textBox_initial_prey.Location = new System.Drawing.Point(54, 48);
             this.textBox_initial_prey.Name = "textBox_initial_prey";
             this.textBox_initial_prey.Size = new System.Drawing.Size(42, 20);
             this.textBox_initial_prey.TabIndex = 0;
             this.textBox_initial_prey.Text = "1000";
             this.textBox_initial_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox_Add_prey
-            // 
-            this.textBox_Add_prey.Location = new System.Drawing.Point(55, 57);
-            this.textBox_Add_prey.Name = "textBox_Add_prey";
-            this.textBox_Add_prey.Size = new System.Drawing.Size(42, 20);
-            this.textBox_Add_prey.TabIndex = 8;
-            this.textBox_Add_prey.Text = "1000";
-            this.textBox_Add_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // label_lx
             // 
             this.label_lx.AutoSize = true;
-            this.label_lx.Location = new System.Drawing.Point(33, 86);
+            this.label_lx.Location = new System.Drawing.Point(39, 120);
             this.label_lx.Name = "label_lx";
             this.label_lx.Size = new System.Drawing.Size(18, 13);
             this.label_lx.TabIndex = 18;
@@ -524,21 +532,12 @@
             // 
             // textBox_Lx
             // 
-            this.textBox_Lx.Location = new System.Drawing.Point(54, 83);
+            this.textBox_Lx.Location = new System.Drawing.Point(60, 117);
             this.textBox_Lx.Name = "textBox_Lx";
             this.textBox_Lx.Size = new System.Drawing.Size(42, 20);
             this.textBox_Lx.TabIndex = 19;
-            this.textBox_Lx.Text = "100";
+            this.textBox_Lx.Text = "50";
             this.textBox_Lx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button_add_animals
-            // 
-            this.button_add_animals.Location = new System.Drawing.Point(103, 56);
-            this.button_add_animals.Name = "button_add_animals";
-            this.button_add_animals.Size = new System.Drawing.Size(36, 20);
-            this.button_add_animals.TabIndex = 10;
-            this.button_add_animals.Text = "Add";
-            this.button_add_animals.UseVisualStyleBackColor = true;
             // 
             // textBox_time_step
             // 
@@ -546,7 +545,7 @@
             this.textBox_time_step.Name = "textBox_time_step";
             this.textBox_time_step.Size = new System.Drawing.Size(37, 20);
             this.textBox_time_step.TabIndex = 14;
-            this.textBox_time_step.Text = "0.1";
+            this.textBox_time_step.Text = "0.5";
             this.textBox_time_step.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label_time_step
@@ -561,7 +560,7 @@
             // label_initial_pred
             // 
             this.label_initial_pred.AutoSize = true;
-            this.label_initial_pred.Location = new System.Drawing.Point(135, 10);
+            this.label_initial_pred.Location = new System.Drawing.Point(102, 49);
             this.label_initial_pred.Name = "label_initial_pred";
             this.label_initial_pred.Size = new System.Drawing.Size(66, 17);
             this.label_initial_pred.TabIndex = 6;
@@ -571,26 +570,18 @@
             // 
             // textBox_initial_predator
             // 
-            this.textBox_initial_predator.Location = new System.Drawing.Point(145, 30);
+            this.textBox_initial_predator.Enabled = false;
+            this.textBox_initial_predator.Location = new System.Drawing.Point(174, 48);
             this.textBox_initial_predator.Name = "textBox_initial_predator";
             this.textBox_initial_predator.Size = new System.Drawing.Size(42, 20);
             this.textBox_initial_predator.TabIndex = 7;
             this.textBox_initial_predator.Text = "100";
             this.textBox_initial_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox_Add_pred
-            // 
-            this.textBox_Add_pred.Location = new System.Drawing.Point(145, 56);
-            this.textBox_Add_pred.Name = "textBox_Add_pred";
-            this.textBox_Add_pred.Size = new System.Drawing.Size(42, 20);
-            this.textBox_Add_pred.TabIndex = 9;
-            this.textBox_Add_pred.Text = "100";
-            this.textBox_Add_pred.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // label_Ly
             // 
             this.label_Ly.AutoSize = true;
-            this.label_Ly.Location = new System.Drawing.Point(121, 85);
+            this.label_Ly.Location = new System.Drawing.Point(127, 119);
             this.label_Ly.Name = "label_Ly";
             this.label_Ly.Size = new System.Drawing.Size(18, 13);
             this.label_Ly.TabIndex = 20;
@@ -598,15 +589,22 @@
             // 
             // textBox_Ly
             // 
-            this.textBox_Ly.Location = new System.Drawing.Point(145, 82);
+            this.textBox_Ly.Location = new System.Drawing.Point(151, 116);
             this.textBox_Ly.Name = "textBox_Ly";
             this.textBox_Ly.Size = new System.Drawing.Size(42, 20);
             this.textBox_Ly.TabIndex = 21;
-            this.textBox_Ly.Text = "100";
+            this.textBox_Ly.Text = "50";
             this.textBox_Ly.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.textBox_gestation);
+            this.tabPage2.Controls.Add(this.textBox_time_between_reproductions);
+            this.tabPage2.Controls.Add(this.textBox_time_between_hunts);
+            this.tabPage2.Controls.Add(this.label28);
+            this.tabPage2.Controls.Add(this.label27);
+            this.tabPage2.Controls.Add(this.label26);
+            this.tabPage2.Controls.Add(this.checkBox_age_dependency);
             this.tabPage2.Controls.Add(this.label_prey_competiton_strength);
             this.tabPage2.Controls.Add(this.textBox_Prey_competition_strength);
             this.tabPage2.Controls.Add(this.textBox_hunting_fertility);
@@ -637,14 +635,25 @@
             this.tabPage2.Text = "LV param";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // checkBox_age_dependency
+            // 
+            this.checkBox_age_dependency.AutoSize = true;
+            this.checkBox_age_dependency.Location = new System.Drawing.Point(17, 40);
+            this.checkBox_age_dependency.Name = "checkBox_age_dependency";
+            this.checkBox_age_dependency.Size = new System.Drawing.Size(167, 17);
+            this.checkBox_age_dependency.TabIndex = 48;
+            this.checkBox_age_dependency.Text = "Use Age dependency on prey";
+            this.checkBox_age_dependency.UseVisualStyleBackColor = true;
+            this.checkBox_age_dependency.CheckedChanged += new System.EventHandler(this.checkBox_age_dependency_CheckedChanged);
+            // 
             // label_prey_competiton_strength
             // 
             this.label_prey_competiton_strength.AutoSize = true;
-            this.label_prey_competiton_strength.Location = new System.Drawing.Point(87, 189);
+            this.label_prey_competiton_strength.Location = new System.Drawing.Point(104, 189);
             this.label_prey_competiton_strength.Name = "label_prey_competiton_strength";
-            this.label_prey_competiton_strength.Size = new System.Drawing.Size(145, 13);
+            this.label_prey_competiton_strength.Size = new System.Drawing.Size(126, 13);
             this.label_prey_competiton_strength.TabIndex = 47;
-            this.label_prey_competiton_strength.Text = "Predator competition strength";
+            this.label_prey_competiton_strength.Text = "Prey competition strength";
             this.label_prey_competiton_strength.Visible = false;
             // 
             // textBox_Prey_competition_strength
@@ -782,6 +791,7 @@
             this.textBox_fertility_prey.TabIndex = 32;
             this.textBox_fertility_prey.Text = "0.004";
             this.textBox_fertility_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_fertility_prey.TextChanged += new System.EventHandler(this.textBox_fertility_prey_TextChanged);
             // 
             // textBox_deathrate_prey
             // 
@@ -791,6 +801,7 @@
             this.textBox_deathrate_prey.TabIndex = 29;
             this.textBox_deathrate_prey.Text = "0.001";
             this.textBox_deathrate_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_deathrate_prey.TextChanged += new System.EventHandler(this.textBox_deathrate_prey_TextChanged);
             // 
             // label_prey_competition_area
             // 
@@ -808,7 +819,7 @@
             this.textBox_deathrate_predator.Name = "textBox_deathrate_predator";
             this.textBox_deathrate_predator.Size = new System.Drawing.Size(42, 20);
             this.textBox_deathrate_predator.TabIndex = 30;
-            this.textBox_deathrate_predator.Text = "0.003";
+            this.textBox_deathrate_predator.Text = "0.005";
             this.textBox_deathrate_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label_hunting_surface
@@ -826,7 +837,7 @@
             this.textBox_predator_competition_strength.Name = "textBox_predator_competition_strength";
             this.textBox_predator_competition_strength.Size = new System.Drawing.Size(53, 20);
             this.textBox_predator_competition_strength.TabIndex = 42;
-            this.textBox_predator_competition_strength.Text = "0.2";
+            this.textBox_predator_competition_strength.Text = "0.1";
             this.textBox_predator_competition_strength.Visible = false;
             // 
             // label8
@@ -947,7 +958,7 @@
             this.textBox_speed_predator.Name = "textBox_speed_predator";
             this.textBox_speed_predator.Size = new System.Drawing.Size(42, 20);
             this.textBox_speed_predator.TabIndex = 27;
-            this.textBox_speed_predator.Text = "1";
+            this.textBox_speed_predator.Text = "0.2";
             this.textBox_speed_predator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // checkBox_Prey_chemotaxis
@@ -977,7 +988,7 @@
             this.textBox_speed_prey.Name = "textBox_speed_prey";
             this.textBox_speed_prey.Size = new System.Drawing.Size(42, 20);
             this.textBox_speed_prey.TabIndex = 24;
-            this.textBox_speed_prey.Text = "1";
+            this.textBox_speed_prey.Text = "0.2";
             this.textBox_speed_prey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label_Predator_chemotaxis_area
@@ -1041,6 +1052,7 @@
             this.tabPage4.Controls.Add(this.textBox_fertility_age_2);
             this.tabPage4.Controls.Add(this.textBox_fertility_age_1);
             this.tabPage4.Controls.Add(this.textBox_fertility_age_0);
+            this.tabPage4.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -1095,6 +1107,8 @@
             // 
             // textBox_speed_age_4
             // 
+            this.textBox_speed_age_4.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_speed_age_4.Enabled = false;
             this.textBox_speed_age_4.Location = new System.Drawing.Point(166, 356);
             this.textBox_speed_age_4.Name = "textBox_speed_age_4";
             this.textBox_speed_age_4.Size = new System.Drawing.Size(24, 20);
@@ -1103,6 +1117,8 @@
             // 
             // textBox_speed_age_3
             // 
+            this.textBox_speed_age_3.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_speed_age_3.Enabled = false;
             this.textBox_speed_age_3.Location = new System.Drawing.Point(136, 356);
             this.textBox_speed_age_3.Name = "textBox_speed_age_3";
             this.textBox_speed_age_3.Size = new System.Drawing.Size(24, 20);
@@ -1111,6 +1127,8 @@
             // 
             // textBox_speed_age_2
             // 
+            this.textBox_speed_age_2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_speed_age_2.Enabled = false;
             this.textBox_speed_age_2.Location = new System.Drawing.Point(106, 356);
             this.textBox_speed_age_2.Name = "textBox_speed_age_2";
             this.textBox_speed_age_2.Size = new System.Drawing.Size(24, 20);
@@ -1119,6 +1137,8 @@
             // 
             // textBox_speed_age_1
             // 
+            this.textBox_speed_age_1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_speed_age_1.Enabled = false;
             this.textBox_speed_age_1.Location = new System.Drawing.Point(75, 356);
             this.textBox_speed_age_1.Name = "textBox_speed_age_1";
             this.textBox_speed_age_1.Size = new System.Drawing.Size(24, 20);
@@ -1127,6 +1147,8 @@
             // 
             // textBox_speed_age_0
             // 
+            this.textBox_speed_age_0.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_speed_age_0.Enabled = false;
             this.textBox_speed_age_0.Location = new System.Drawing.Point(45, 356);
             this.textBox_speed_age_0.Name = "textBox_speed_age_0";
             this.textBox_speed_age_0.Size = new System.Drawing.Size(24, 20);
@@ -1135,6 +1157,8 @@
             // 
             // textBox_mortality_age_4
             // 
+            this.textBox_mortality_age_4.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_mortality_age_4.Enabled = false;
             this.textBox_mortality_age_4.Location = new System.Drawing.Point(192, 209);
             this.textBox_mortality_age_4.Name = "textBox_mortality_age_4";
             this.textBox_mortality_age_4.Size = new System.Drawing.Size(37, 20);
@@ -1143,6 +1167,8 @@
             // 
             // textBox_mortality_age_3
             // 
+            this.textBox_mortality_age_3.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_mortality_age_3.Enabled = false;
             this.textBox_mortality_age_3.Location = new System.Drawing.Point(149, 209);
             this.textBox_mortality_age_3.Name = "textBox_mortality_age_3";
             this.textBox_mortality_age_3.Size = new System.Drawing.Size(39, 20);
@@ -1151,6 +1177,8 @@
             // 
             // textBox_mortality_age_2
             // 
+            this.textBox_mortality_age_2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_mortality_age_2.Enabled = false;
             this.textBox_mortality_age_2.Location = new System.Drawing.Point(106, 209);
             this.textBox_mortality_age_2.Name = "textBox_mortality_age_2";
             this.textBox_mortality_age_2.Size = new System.Drawing.Size(39, 20);
@@ -1159,6 +1187,8 @@
             // 
             // textBox_mortality_age_1
             // 
+            this.textBox_mortality_age_1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_mortality_age_1.Enabled = false;
             this.textBox_mortality_age_1.Location = new System.Drawing.Point(56, 209);
             this.textBox_mortality_age_1.Name = "textBox_mortality_age_1";
             this.textBox_mortality_age_1.Size = new System.Drawing.Size(43, 20);
@@ -1167,6 +1197,8 @@
             // 
             // textBox_mortality_age_0
             // 
+            this.textBox_mortality_age_0.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_mortality_age_0.Enabled = false;
             this.textBox_mortality_age_0.Location = new System.Drawing.Point(11, 209);
             this.textBox_mortality_age_0.Name = "textBox_mortality_age_0";
             this.textBox_mortality_age_0.Size = new System.Drawing.Size(39, 20);
@@ -1175,6 +1207,8 @@
             // 
             // textBox_fertility_age_4
             // 
+            this.textBox_fertility_age_4.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_fertility_age_4.Enabled = false;
             this.textBox_fertility_age_4.Location = new System.Drawing.Point(192, 56);
             this.textBox_fertility_age_4.Name = "textBox_fertility_age_4";
             this.textBox_fertility_age_4.Size = new System.Drawing.Size(37, 20);
@@ -1183,6 +1217,8 @@
             // 
             // textBox_fertility_age_3
             // 
+            this.textBox_fertility_age_3.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_fertility_age_3.Enabled = false;
             this.textBox_fertility_age_3.Location = new System.Drawing.Point(149, 56);
             this.textBox_fertility_age_3.Name = "textBox_fertility_age_3";
             this.textBox_fertility_age_3.Size = new System.Drawing.Size(37, 20);
@@ -1191,6 +1227,8 @@
             // 
             // textBox_fertility_age_2
             // 
+            this.textBox_fertility_age_2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_fertility_age_2.Enabled = false;
             this.textBox_fertility_age_2.Location = new System.Drawing.Point(100, 56);
             this.textBox_fertility_age_2.Name = "textBox_fertility_age_2";
             this.textBox_fertility_age_2.Size = new System.Drawing.Size(44, 20);
@@ -1199,6 +1237,8 @@
             // 
             // textBox_fertility_age_1
             // 
+            this.textBox_fertility_age_1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_fertility_age_1.Enabled = false;
             this.textBox_fertility_age_1.Location = new System.Drawing.Point(57, 56);
             this.textBox_fertility_age_1.Name = "textBox_fertility_age_1";
             this.textBox_fertility_age_1.Size = new System.Drawing.Size(37, 20);
@@ -1207,6 +1247,8 @@
             // 
             // textBox_fertility_age_0
             // 
+            this.textBox_fertility_age_0.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox_fertility_age_0.Enabled = false;
             this.textBox_fertility_age_0.Location = new System.Drawing.Point(13, 56);
             this.textBox_fertility_age_0.Name = "textBox_fertility_age_0";
             this.textBox_fertility_age_0.Size = new System.Drawing.Size(39, 20);
@@ -1247,62 +1289,10 @@
             this.dataGridView_simulations.TabIndex = 12;
             this.dataGridView_simulations.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_simulations_CellContentClick);
             // 
-            // textBox_path
-            // 
-            this.textBox_path.Location = new System.Drawing.Point(0, 741);
-            this.textBox_path.Name = "textBox_path";
-            this.textBox_path.ReadOnly = true;
-            this.textBox_path.Size = new System.Drawing.Size(586, 20);
-            this.textBox_path.TabIndex = 13;
-            this.textBox_path.TextChanged += new System.EventHandler(this.textBox_path_TextChanged);
-            // 
-            // button_change_directory
-            // 
-            this.button_change_directory.Location = new System.Drawing.Point(580, 738);
-            this.button_change_directory.Name = "button_change_directory";
-            this.button_change_directory.Size = new System.Drawing.Size(113, 23);
-            this.button_change_directory.TabIndex = 14;
-            this.button_change_directory.Text = "Change directory";
-            this.button_change_directory.UseVisualStyleBackColor = true;
-            this.button_change_directory.Click += new System.EventHandler(this.button_change_directory_Click);
-            // 
-            // folderBrowserDialog1
-            // 
-            this.folderBrowserDialog1.SelectedPath = "D:\\Simulations";
-            // 
-            // timer_simulation_update
-            // 
-            this.timer_simulation_update.Tick += new System.EventHandler(this.timer_simulation_update_Tick);
-            // 
-            // textBox_information
-            // 
-            this.textBox_information.Location = new System.Drawing.Point(15, 427);
-            this.textBox_information.Multiline = true;
-            this.textBox_information.Name = "textBox_information";
-            this.textBox_information.Size = new System.Drawing.Size(290, 264);
-            this.textBox_information.TabIndex = 15;
-            // 
-            // textBox_subfolder
-            // 
-            this.textBox_subfolder.Location = new System.Drawing.Point(440, 715);
-            this.textBox_subfolder.Name = "textBox_subfolder";
-            this.textBox_subfolder.Size = new System.Drawing.Size(129, 20);
-            this.textBox_subfolder.TabIndex = 16;
-            this.textBox_subfolder.TextChanged += new System.EventHandler(this.textBox_subfolder_TextChanged);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(382, 718);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(52, 13);
-            this.label21.TabIndex = 17;
-            this.label21.Text = "Subfolder";
-            // 
             // Simulation_number
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.Simulation_number.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            this.Simulation_number.DefaultCellStyle = dataGridViewCellStyle5;
             this.Simulation_number.HeaderText = "N";
             this.Simulation_number.Name = "Simulation_number";
             this.Simulation_number.ReadOnly = true;
@@ -1357,18 +1347,121 @@
             // 
             // Delete
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Red;
-            this.Delete.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Red;
+            this.Delete.DefaultCellStyle = dataGridViewCellStyle6;
             this.Delete.HeaderText = "Delete";
             this.Delete.Name = "Delete";
             this.Delete.ReadOnly = true;
             this.Delete.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Delete.Text = "X";
             this.Delete.Width = 25;
+            // 
+            // textBox_path
+            // 
+            this.textBox_path.Location = new System.Drawing.Point(0, 741);
+            this.textBox_path.Name = "textBox_path";
+            this.textBox_path.ReadOnly = true;
+            this.textBox_path.Size = new System.Drawing.Size(586, 20);
+            this.textBox_path.TabIndex = 13;
+            this.textBox_path.TextChanged += new System.EventHandler(this.textBox_path_TextChanged);
+            // 
+            // button_change_directory
+            // 
+            this.button_change_directory.Location = new System.Drawing.Point(580, 738);
+            this.button_change_directory.Name = "button_change_directory";
+            this.button_change_directory.Size = new System.Drawing.Size(113, 23);
+            this.button_change_directory.TabIndex = 14;
+            this.button_change_directory.Text = "Change directory";
+            this.button_change_directory.UseVisualStyleBackColor = true;
+            this.button_change_directory.Click += new System.EventHandler(this.button_change_directory_Click);
+            // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.SelectedPath = "D:\\Simulations";
+            // 
+            // timer_simulation_update
+            // 
+            this.timer_simulation_update.Tick += new System.EventHandler(this.timer_simulation_update_Tick);
+            // 
+            // textBox_information
+            // 
+            this.textBox_information.Location = new System.Drawing.Point(15, 427);
+            this.textBox_information.Multiline = true;
+            this.textBox_information.Name = "textBox_information";
+            this.textBox_information.Size = new System.Drawing.Size(290, 264);
+            this.textBox_information.TabIndex = 15;
+            // 
+            // textBox_subfolder
+            // 
+            this.textBox_subfolder.Location = new System.Drawing.Point(440, 715);
+            this.textBox_subfolder.Name = "textBox_subfolder";
+            this.textBox_subfolder.Size = new System.Drawing.Size(129, 20);
+            this.textBox_subfolder.TabIndex = 16;
+            this.textBox_subfolder.TextChanged += new System.EventHandler(this.textBox_subfolder_TextChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(382, 718);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(52, 13);
+            this.label21.TabIndex = 17;
+            this.label21.Text = "Subfolder";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(26, 354);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(99, 13);
+            this.label26.TabIndex = 49;
+            this.label26.Text = "time between hunts";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(26, 386);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(50, 13);
+            this.label27.TabIndex = 50;
+            this.label27.Text = "gestation";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(26, 418);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(137, 13);
+            this.label28.TabIndex = 51;
+            this.label28.Text = "time between reproductions";
+            // 
+            // textBox_time_between_hunts
+            // 
+            this.textBox_time_between_hunts.Location = new System.Drawing.Point(175, 354);
+            this.textBox_time_between_hunts.Name = "textBox_time_between_hunts";
+            this.textBox_time_between_hunts.Size = new System.Drawing.Size(41, 20);
+            this.textBox_time_between_hunts.TabIndex = 52;
+            this.textBox_time_between_hunts.Text = "0";
+            // 
+            // textBox_time_between_reproductions
+            // 
+            this.textBox_time_between_reproductions.Location = new System.Drawing.Point(175, 411);
+            this.textBox_time_between_reproductions.Name = "textBox_time_between_reproductions";
+            this.textBox_time_between_reproductions.Size = new System.Drawing.Size(41, 20);
+            this.textBox_time_between_reproductions.TabIndex = 53;
+            this.textBox_time_between_reproductions.Text = "0";
+            // 
+            // textBox_gestation
+            // 
+            this.textBox_gestation.Location = new System.Drawing.Point(175, 383);
+            this.textBox_gestation.Name = "textBox_gestation";
+            this.textBox_gestation.Size = new System.Drawing.Size(41, 20);
+            this.textBox_gestation.TabIndex = 54;
+            this.textBox_gestation.Text = "0";
             // 
             // Form1
             // 
@@ -1414,9 +1507,6 @@
         private System.Windows.Forms.TextBox textBox_initial_prey;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label_initial_prey;
-        private System.Windows.Forms.Button button_add_animals;
-        private System.Windows.Forms.TextBox textBox_Add_pred;
-        private System.Windows.Forms.TextBox textBox_Add_prey;
         private System.Windows.Forms.TextBox textBox_initial_predator;
         private System.Windows.Forms.Label label_initial_pred;
         private System.Windows.Forms.TextBox textBox_time_step;
@@ -1500,7 +1590,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NameGrid;
         private System.Windows.Forms.TextBox textBox_subfolder;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
@@ -1531,5 +1620,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn progress;
         private System.Windows.Forms.DataGridViewTextBoxColumn Status;
         private System.Windows.Forms.DataGridViewTextBoxColumn Simulation_number;
+        private System.Windows.Forms.CheckBox checkBox_initvalue_eq;
+        private System.Windows.Forms.CheckBox checkBox_age_dependency;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox textBox_gestation;
+        private System.Windows.Forms.TextBox textBox_time_between_reproductions;
+        private System.Windows.Forms.TextBox textBox_time_between_hunts;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
     }
 }

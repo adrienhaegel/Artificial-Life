@@ -144,26 +144,36 @@ namespace Alife
                 workbook_common = new XLWorkbook(); //If not defined, create a new one
             }
             IXLWorksheet worksheet_common;
+            IXLWorksheet worksheet_common_shared;
             try
             {
                 worksheet_common = workbook_common.Worksheets.Add(GetStringName(), simulation.index); //Add sheet with simulation name
+                worksheet_common_shared = workbook_common.Worksheets.Add("Shared", 0);
             }
             catch
             {
                 worksheet_common = workbook_common.Worksheet(GetStringName());
+                worksheet_common_shared = workbook_common.Worksheet("Shared");
             }
             Write_Biomass_XLS(ref worksheet_common); //Write biomass in this sheet
+           // Write_Shared(ref worksheet_common_shared);
             workbook_common.SaveAs(folder_path + "\\common\\" + "Prey_Predator_Biomass_Common.xlsx"); //Save
             Workbook book_common = new Workbook(); //Open new Spire file
             progress_export_data = 75;
             book_common.LoadFromFile(folder_path + "\\common\\" + "Prey_Predator_Biomass_Common.xlsx"); //Load the file we just saved woth ClosedXML
             Worksheet sheet_common = book_common.Worksheets[GetStringName().ToString()]; //Open sheet
+            Worksheet sheet_shared = book_common.Worksheets["Shared"]; //Open sheet
             Generate_Graphs(ref sheet_common); //Generate the graphs
+
             Generate_Formulas(ref sheet_common); //Generate the formulas for data analysis
+            Generate_Shared(ref sheet_common, ref sheet_shared);
+
             book_common.SaveToFile(folder_path + "\\common\\" + "Prey_Predator_Biomass_Common.xlsx"); //Save the file back
             progress_export_data = 100;
 
+
         }
+
 
         public void Generate_Graphs(ref Worksheet sheet) //Generates the graphs in the sheet
         {
@@ -184,13 +194,13 @@ namespace Alife
             {
                 try
                 {
-
-                }
-                catch
-                {
                     bgrIm = ImageIO.LoadColor(folder_path + "\\" + GetStringName() + "\\images\\" + i + ".png").ToBgr();
                     videoWriter.Write(bgrIm.Lock()); //write a single frame
                     progress_video = (int)Math.Floor(100.0 * i / (double)results.Count);
+                }
+                catch
+                {
+
                 }
             }
 
@@ -233,7 +243,6 @@ namespace Alife
             sheet.Range[4, 11].Formula = "=STDEV.S(B" + "2" + ":B" + range + ")";
             sheet.Range[5, 11].Formula = "=MIN(B" + "2" + ":B" + range + ")";
             sheet.Range[6, 11].Formula = "=MAX(B" + "2" + ":B" + range + ")";
-
             //Predator Analysis
             sheet.Range[3, 9].Formula = "=AVERAGE(C" + halfrange + ":C" + range + ")";
             sheet.Range[4, 9].Formula = "=STDEV.S(C" + halfrange + ":C" + range + ")";
@@ -243,6 +252,37 @@ namespace Alife
             sheet.Range[4, 12].Formula = "=STDEV.S(C" + "2" + ":C" + range + ")";
             sheet.Range[5, 12].Formula = "=MIN(C" + "2" + ":C" + range + ")";
             sheet.Range[6, 12].Formula = "=MAX(C" + "2" + ":C" + range + ")";
+
+            
+        }
+
+         
+        public void Generate_Shared(ref Worksheet sheet, ref Worksheet sheet_shared) //Generates formulas for Data Analysis
+        {
+            sheet_shared.Range[1, 1].Value = "Simulation Index";
+            sheet_shared.Range[1, 3].Value = "Prey Average";
+            sheet_shared.Range[1, 4].Value = "Prey Deviation";
+            sheet_shared.Range[1, 5].Value = "Prey Minimum";
+            sheet_shared.Range[1, 6].Value = "Prey Maximum";
+
+            sheet_shared.Range[1, 8].Value = "Predator Average";
+            sheet_shared.Range[1, 9].Value = "Predator Deviation";
+            sheet_shared.Range[1, 10].Value = "Predator Minimum";
+            sheet_shared.Range[1, 11].Value = "Predator Maximum";
+
+            sheet_shared.Range[simulation.index+2, 1].NumberValue = simulation.index;
+
+            sheet_shared.Range[simulation.index + 2, 3].Formula = "='" +sheet.Name + "'" + "!H3";
+            sheet_shared.Range[simulation.index + 2, 4].Formula = "='" + sheet.Name + "'" + "!H4"; 
+            sheet_shared.Range[simulation.index + 2, 5].Formula = "='" + sheet.Name + "'" + "!H5";
+            sheet_shared.Range[simulation.index + 2, 6].Formula = "='" + sheet.Name + "'" + "!H6";
+
+            sheet_shared.Range[simulation.index + 2, 8].Formula = "='" + sheet.Name + "'" + "!I3";
+            sheet_shared.Range[simulation.index + 2, 9].Formula = "='" + sheet.Name + "'" + "!I4"; 
+            sheet_shared.Range[simulation.index + 2, 10].Formula = "='" + sheet.Name + "'" + "!I5"; 
+            sheet_shared.Range[simulation.index + 2, 11].Formula = "='" + sheet.Name + "'" + "!I6";
+            
+
         }
 
         public void Generate_Biomass_Time_Graph(ref Worksheet sheet) //Generate Biomass/Time graph in given sheet
@@ -464,6 +504,35 @@ namespace Alife
 
             worksheet.Cell(30, 14).Value = "f";
             worksheet.Cell(30, 15).Value = p.f;
+
+            worksheet.Cell(32, 14).Value = "Prey Fertility (age)";
+            worksheet.Cell(32, 15).Value = p.fertility_age[0];
+            worksheet.Cell(32, 16).Value = p.fertility_age[1];
+            worksheet.Cell(32, 17).Value = p.fertility_age[2];
+            worksheet.Cell(32, 18).Value = p.fertility_age[3];
+            worksheet.Cell(32, 19).Value = p.fertility_age[4];
+
+            worksheet.Cell(33, 14).Value = "Prey Death Rate (age)";
+            worksheet.Cell(33, 15).Value = p.deathrate_age[0];
+            worksheet.Cell(33, 16).Value = p.deathrate_age[1];
+            worksheet.Cell(33, 17).Value = p.deathrate_age[2];
+            worksheet.Cell(33, 18).Value = p.deathrate_age[3];
+            worksheet.Cell(33, 19).Value = p.deathrate_age[4];
+
+            worksheet.Cell(34, 14).Value = "Prey Speed(age)";
+            worksheet.Cell(34, 15).Value = p.speed_age[0];
+            worksheet.Cell(34, 16).Value = p.speed_age[1];
+            worksheet.Cell(34, 17).Value = p.speed_age[2];
+            worksheet.Cell(34, 18).Value = p.speed_age[3];
+            worksheet.Cell(34, 19).Value = p.speed_age[4];
+
+            worksheet.Cell(36, 14).Value = "Time between hunts";
+            worksheet.Cell(37, 14).Value = "Gestation";
+            worksheet.Cell(38, 14).Value = "Time between reproduction";
+
+            worksheet.Cell(36, 15).Value =p.time_between_hunts;
+            worksheet.Cell(37, 15).Value =p.gestation;
+            worksheet.Cell(38, 15).Value = p.time_between_reproduction;
         }
     }
 }

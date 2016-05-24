@@ -69,8 +69,8 @@ namespace Alife
 
         public void Run_Simulation()
         {
-            driver.Add_Random_Prey((int)Math.Floor(parameters.prey_eq));
-            driver.Add_Random_Predator((int)Math.Floor(parameters.pred_eq));
+            driver.Add_Random_Prey(parameters.initialprey);
+            driver.Add_Random_Predator(parameters.initialpredator);
             driver.Run();
         }
 

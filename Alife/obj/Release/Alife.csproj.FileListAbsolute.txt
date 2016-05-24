@@ -13,3 +13,6 @@ C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.csproj
 C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.exe
 C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.pdb
 C:\Users\Adrien\Desktop\CScode\discretesima\Alife\Alife\obj\Release\Alife.csprojResolveAssemblyReference.cache
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\bin\Release\Alife.exe.config
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Release\Alife.exe
+D:\Dropbox\KAIST\Thesis\CScode\discretesima\Alife\Alife\obj\Release\Alife.pdb

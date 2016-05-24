@@ -60,8 +60,8 @@ namespace Alife
             p.Length_y = Convert.ToDouble(textBox_Ly.Text, CultureInfo.InvariantCulture);
             p.timestep = double.Parse(textBox_time_step.Text, CultureInfo.InvariantCulture);
 
-            p.initialpredator = Convert.ToInt32(textBox_initial_predator.Text, CultureInfo.InvariantCulture);
-            p.initialprey = Convert.ToInt32(textBox_initial_prey.Text, CultureInfo.InvariantCulture);
+
+
 
             p.prey_speed = double.Parse(textBox_speed_prey.Text, CultureInfo.InvariantCulture);
             p.predator_speed = double.Parse(textBox_speed_predator.Text, CultureInfo.InvariantCulture);
@@ -96,7 +96,7 @@ namespace Alife
             p.final_time = double.Parse(textBox_final_time.Text, CultureInfo.InvariantCulture);
             p.name = textBox_name.Text;
 
-            p.age_enabled = true;
+    
 
 
             p.fertility_age[0] = double.Parse(textBox_fertility_age_0.Text, CultureInfo.InvariantCulture);
@@ -124,6 +124,16 @@ namespace Alife
 
             Update_equilibrium_values(p, out p.a, out p.b, out p.c, out p.d, out p.e, out p.f, out p.ratio, out p.prey_eq, out p.pred_eq);
 
+
+            if (checkBox_initvalue_eq.Checked)
+            {
+                textBox_initial_prey.Text = Math.Floor(p.prey_eq).ToString();
+                textBox_initial_predator.Text = Math.Floor(p.pred_eq).ToString(); 
+            }
+            p.initialpredator = Convert.ToInt32(textBox_initial_predator.Text, CultureInfo.InvariantCulture);
+            p.initialprey = Convert.ToInt32(textBox_initial_prey.Text, CultureInfo.InvariantCulture);
+
+
             // p.path = textBox_path.Text;
             string file = folderBrowserDialog1.SelectedPath;
             if (textBox_subfolder.Text != "")
@@ -133,6 +143,10 @@ namespace Alife
             textBox_path.Text = file;
             savefolder = file;
             p.path = file;
+
+            p.time_between_hunts = double.Parse(textBox_time_between_hunts.Text, CultureInfo.InvariantCulture);
+            p.gestation = double.Parse(textBox_gestation.Text, CultureInfo.InvariantCulture);
+            p.time_between_reproduction = double.Parse(textBox_time_between_reproductions.Text, CultureInfo.InvariantCulture);
 
             return p;
         }
@@ -528,5 +542,112 @@ namespace Alife
         {
 
         }
+
+        private void checkBox_initvalue_eq_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_initvalue_eq.Checked)
+            {
+                textBox_initial_prey.Enabled = false;
+                textBox_initial_predator.Enabled = false;
+            }
+            else
+            {
+                textBox_initial_prey.Enabled = true;
+                textBox_initial_predator.Enabled = true;
+            }
+        }
+
+        private void checkBox_age_dependency_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_age_dependency.Checked)
+            {
+                textBox_fertility_age_0.Enabled = true;
+                textBox_fertility_age_1.Enabled = true;
+                textBox_fertility_age_2.Enabled = true;
+                textBox_fertility_age_3.Enabled = true;
+                textBox_fertility_age_4.Enabled = true;
+
+                textBox_fertility_age_0.Text=textBox_fertility_prey.Text;
+                textBox_fertility_age_1.Text = textBox_fertility_prey.Text;
+                textBox_fertility_age_2.Text = textBox_fertility_prey.Text;
+                textBox_fertility_age_3.Text = textBox_fertility_prey.Text;
+                textBox_fertility_age_4.Text = textBox_fertility_prey.Text;
+
+
+
+                textBox_mortality_age_0.Enabled = true;
+                textBox_mortality_age_1.Enabled = true;
+                textBox_mortality_age_2.Enabled = true;
+                textBox_mortality_age_3.Enabled = true;
+                textBox_mortality_age_4.Enabled = true;
+
+                textBox_mortality_age_0.Text = textBox_deathrate_prey.Text;
+                textBox_mortality_age_1.Text = textBox_deathrate_prey.Text;
+                textBox_mortality_age_2.Text = textBox_deathrate_prey.Text;
+                textBox_mortality_age_3.Text = textBox_deathrate_prey.Text;
+                textBox_mortality_age_4.Text = textBox_deathrate_prey.Text;
+
+
+
+
+                textBox_speed_age_0.Enabled = true;
+                textBox_speed_age_1.Enabled = true;
+                textBox_speed_age_2.Enabled = true;
+                textBox_speed_age_3.Enabled = true;
+                textBox_speed_age_4.Enabled = true;
+
+                textBox_speed_age_0.Text = 1.ToString();
+                textBox_speed_age_1.Text = 1.ToString();
+                textBox_speed_age_2.Text = 1.ToString();
+                textBox_speed_age_3.Text = 1.ToString();
+                textBox_speed_age_4.Text = 1.ToString();
+            }
+            else
+            {
+                textBox_fertility_age_0.Enabled = false;
+                textBox_fertility_age_1.Enabled = false;
+                textBox_fertility_age_2.Enabled = false;
+                textBox_fertility_age_3.Enabled = false;
+                textBox_fertility_age_4.Enabled = false;
+
+                textBox_mortality_age_0.Enabled = false;
+                textBox_mortality_age_1.Enabled = false;
+                textBox_mortality_age_2.Enabled = false;
+                textBox_mortality_age_3.Enabled = false;
+                textBox_mortality_age_4.Enabled = false;
+
+                textBox_speed_age_0.Enabled = false;
+                textBox_speed_age_1.Enabled = false;
+                textBox_speed_age_2.Enabled = false;
+                textBox_speed_age_3.Enabled = false;
+                textBox_speed_age_4.Enabled = false;
+            }
+
+          
+
+        }
+
+        private void textBox_deathrate_prey_TextChanged(object sender, EventArgs e)
+        {
+            textBox_mortality_age_0.Text = textBox_deathrate_prey.Text;
+            textBox_mortality_age_1.Text = textBox_deathrate_prey.Text;
+            textBox_mortality_age_2.Text = textBox_deathrate_prey.Text;
+            textBox_mortality_age_3.Text = textBox_deathrate_prey.Text;
+            textBox_mortality_age_4.Text = textBox_deathrate_prey.Text;
+
+        }
+
+        private void textBox_fertility_prey_TextChanged(object sender, EventArgs e)
+        {
+            textBox_fertility_age_0.Text = textBox_fertility_prey.Text;
+            textBox_fertility_age_1.Text = textBox_fertility_prey.Text;
+            textBox_fertility_age_2.Text = textBox_fertility_prey.Text;
+            textBox_fertility_age_3.Text = textBox_fertility_prey.Text;
+            textBox_fertility_age_4.Text = textBox_fertility_prey.Text;
+           
+
+        }
+
+
     }
 }

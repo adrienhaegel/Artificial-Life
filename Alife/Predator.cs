@@ -8,34 +8,42 @@ namespace Alife
 {
     public class Predator : Gridable, Animal
     {
+        [ThreadStatic]
         public static Parameters parameters;
-        public Random rand;
+        [ThreadStatic]
+        public static Random rand;
         public double x;
         public double y;
 
 
         public int xindex;
         public int yindex;
-
+        [ThreadStatic]
         public static Grid<Predator> predatorgrid;
+        [ThreadStatic]
         public static Grid<Prey> preygrid;
+
+        public double hasfood;
+        public double hasreproduced;
+        public bool ispregant;
+        public double gestation;
 
         public Predator()
         {
-            this.rand = parameters.rand;
+
             this.x = rand.NextDouble() * parameters.Length_x;
             this.y = rand.NextDouble() * parameters.Length_y;
 
-            
+            hasfood = 0;
+            hasreproduced = parameters.time_between_reproduction;
+            ispregant = false;
+            gestation = 0;
         }
 
         public Predator(double x, double y)
         {
-            this.rand = parameters.rand;
             this.x = x;
             this.y = y;
-
-
         }
 
         public Predator Copy()
@@ -45,34 +53,75 @@ namespace Alife
 
         public Predator GetOffspring()
         {
-            return new Predator(this.x, this.y);
+            double randNormalx = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
+            double randNormaly = GetFromNormalDistrib(0, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
+
+            double newx_cor;
+            double newy_cor;
+            Rebound(out newx_cor, out newy_cor, this.x + randNormalx, this.y + randNormaly); //Check if no boundaries and update position consequently
+            return new Predator(newx_cor, newy_cor);
         }
 
-        public bool Reproduce()
+        public void HuntAndReproduce()
         {
-            if (rand.NextDouble() < parameters.timestep)
+
+            if (hasfood <= 0)
             {
-                Tuple<double, Prey> closestprey = preygrid.FindClosestinRadius(this.x, this.y, parameters.hunting_area);
-
-
-
-
-                if (closestprey.Item1 < parameters.hunting_area)
+                if (rand.NextDouble() < parameters.timestep)
                 {
-                    preygrid.Remove(closestprey.Item2);
-                    return (rand.NextDouble() < parameters.hunting_fertility);
+
+
+                    Tuple<double, Prey> closestprey = preygrid.FindClosestinRadius(this.x, this.y, parameters.hunting_area);
+
+
+                    if (closestprey.Item1 < parameters.hunting_area)
+                    {
+                        preygrid.Remove(closestprey.Item2);
+                        hasfood = parameters.time_between_hunts;
+                        Reproduce();
+
+                    }
+                }
+
+            }
+
+        }
+
+
+        public void Reproduce()
+        {
+
+
+
+
+            if (hasreproduced <= 0 && !ispregant)
+            {
+                if (rand.NextDouble() < parameters.hunting_fertility )
+                {
+                    ispregant = true;
+                    hasreproduced = parameters.time_between_reproduction;
+                    gestation = parameters.gestation;
+
                 }
             }
-            else {
-                if (rand.NextDouble() < parameters.timestep * parameters.predator_fertility)
-                {
-                    return true;
-                }
+
+
+
+
+
+
+
+        }
+
+        public bool Birth()
+        {
+            if (ispregant && gestation < 0)
+            {
+                ispregant = false;
+                gestation = 0;
+                return true;
             }
             return false;
-          
-
-
         }
 
         public double GetFromNormalDistrib(double mean, double deviation) //Generates a double from normal distribution. The distribution is truncated at -10 and 10 to avoid very high unexpected values.
@@ -99,15 +148,43 @@ namespace Alife
 
                     double xdirection = (closestprey.Item2.x - this.x) / Math.Sqrt((closestprey.Item2.x - this.x) * (closestprey.Item2.x - this.x) + (closestprey.Item2.y - this.y) * (closestprey.Item2.y - this.y));
                     double ydirection = (closestprey.Item2.y - this.y) / Math.Sqrt((closestprey.Item2.x - this.x) * (closestprey.Item2.x - this.x) + (closestprey.Item2.y - this.y) * (closestprey.Item2.y - this.y));
-
-                    double randNormalx = GetFromNormalDistrib(parameters.predator_chemotaxis_speed * parameters.timestep * xdirection, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
-                    double randNormaly = GetFromNormalDistrib(parameters.predator_chemotaxis_speed * parameters.timestep * ydirection, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
+                    /*
+                    if ((xdirection * xdirection + ydirection * ydirection) > parameters.predator_chemotaxis_speed)
+                    {
+                        xdirection = parameters.predator_chemotaxis_speed * xdirection / Math.Sqrt((closestprey.Item2.x - this.x) * (closestprey.Item2.x - this.x) + (closestprey.Item2.y - this.y) * (closestprey.Item2.y - this.y));
+                        ydirection = parameters.predator_chemotaxis_speed * ydirection / Math.Sqrt((closestprey.Item2.x - this.x) * (closestprey.Item2.x - this.x) + (closestprey.Item2.y - this.y) * (closestprey.Item2.y - this.y));
+                    }
+                    */
+                    double randNormalx = GetFromNormalDistrib(parameters.timestep * xdirection * parameters.predator_chemotaxis_speed, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
+                    double randNormaly = GetFromNormalDistrib(parameters.timestep * ydirection * parameters.predator_chemotaxis_speed, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
 
                     double newx_cor;
                     double newy_cor;
                     Rebound(out newx_cor, out newy_cor, this.x + randNormalx, this.y + randNormaly); //Check if no boundaries and update position consequently
 
-                    predatorgrid.Update(this, newx_cor, newy_cor); //update positions
+                    Tuple<double, Predator> closestpredator = predatorgrid.FindClosestinRadius_Not_Self(newx_cor, newy_cor, parameters.predator_competition_area);
+                    if (closestpredator.Item1 < parameters.predator_competition_area)
+                    {
+                        xdirection = (closestpredator.Item2.x - newx_cor) / Math.Sqrt((closestpredator.Item2.x - newx_cor) * (closestpredator.Item2.x - newx_cor) + (closestpredator.Item2.y - newy_cor) * (closestpredator.Item2.y - newy_cor));
+                        ydirection = (closestpredator.Item2.y - newy_cor) / Math.Sqrt((closestpredator.Item2.x - newx_cor) * (closestpredator.Item2.x - newx_cor) + (closestpredator.Item2.y - newy_cor) * (closestpredator.Item2.y - newy_cor));
+
+                        randNormalx = GetFromNormalDistrib(-parameters.timestep * xdirection * parameters.predator_speed, Math.Sqrt(parameters.timestep) * parameters.predator_speed); //get brownian motion
+                        randNormaly = GetFromNormalDistrib(-parameters.timestep * ydirection * parameters.predator_speed, Math.Sqrt(parameters.timestep) * parameters.predator_speed);
+
+                        double newx_cor_pred;
+                        double newy_cor_pred;
+                        Rebound(out newx_cor_pred, out newy_cor_pred, newx_cor + randNormalx, newy_cor + randNormaly); //Check if no boundaries and update position consequently
+                        predatorgrid.Update(this, newx_cor_pred, newy_cor_pred); //update positions
+                    }
+                    else
+                    {
+                        predatorgrid.Update(this, newx_cor, newy_cor);
+                    }
+
+         
+
+
+                    
                 }
                 else
                 {
@@ -169,7 +246,19 @@ namespace Alife
 
         public bool Die() //This is the natural death rate of animals
         {
-            return (rand.NextDouble() < parameters.predator_deathrate * parameters.timestep);
+            Age();
+            if (hasfood <= 0)
+            {
+                return (rand.NextDouble() < parameters.predator_deathrate * parameters.timestep);
+            }
+            return false;
+        }
+
+        public void Age()
+        {
+            this.hasfood -= parameters.timestep;
+            this.hasreproduced -= parameters.timestep;
+            this.gestation -= parameters.timestep;
         }
 
         public int Getxindex()
