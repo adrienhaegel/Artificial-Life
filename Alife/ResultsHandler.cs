@@ -1,15 +1,10 @@
 ﻿using ClosedXML.Excel;
 using DotImaging;
 using Spire.Xls;
-using Spire.Xls.Charts;
-using Splicer.Renderer;
-using Splicer.Timeline;
-using Splicer.WindowsMedia;
+using Spire.XLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Alife
 {
@@ -60,10 +55,7 @@ namespace Alife
                 Export_Biomass();
                 Kills_Evaluation_Message();
             }
-           
         }
-
-
 
         public void Make_Video()
         {
@@ -112,7 +104,6 @@ namespace Alife
 
         private void Export_Biomass() //Export biomass data and creates plot in XLS file. Also creates a common file for all simulations
         {
-
             progress_export_data = 0;
             //To write and work in XLS file, ClosedXML and Spire are used
             XLWorkbook workbook = new XLWorkbook(); //Creates new excel document with ClosedXML
@@ -121,6 +112,8 @@ namespace Alife
             workbook.SaveAs(folder_path + "\\" + GetStringName() + "\\" + "Biomass" + GetStringName() + ".xlsx"); //Save the file
             progress_export_data = 25;
             //Graphs are not supported by ClosedXML, so we use Spire.
+            
+            
             Workbook book = new Workbook(); //Open new Spire file
             book.LoadFromFile(folder_path + "\\" + GetStringName() + "\\" + "Biomass" + GetStringName() + ".xlsx"); //Load the file we just saved woth ClosedXML
             Worksheet sheet = book.Worksheets[GetStringName().ToString()]; //Open sheet
@@ -170,8 +163,6 @@ namespace Alife
 
             book_common.SaveToFile(folder_path + "\\common\\" + "Prey_Predator_Biomass_Common.xlsx"); //Save the file back
             progress_export_data = 100;
-
-
         }
 
 
@@ -179,11 +170,9 @@ namespace Alife
         {
             Generate_Biomass_Time_Graph(ref sheet); //PreyBiomass / Time     and PredatorBiomass /time
             Generate_Biomass_Phase_Graph(ref sheet); //PreyBiomass / PredatorBiomass
-   
-
         }
 
-        public void Generate_Video()
+        public void Generate_Video() //writes video
         {
             System.IO.Directory.CreateDirectory(folder_path + "\\" + GetStringName() + "\\video\\");
             Bgr<byte>[,] bgrIm;
@@ -203,28 +192,7 @@ namespace Alife
 
                 }
             }
-
-
-             
-
             videoWriter.Close();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
         }
 
        
@@ -252,8 +220,6 @@ namespace Alife
             sheet.Range[4, 12].Formula = "=STDEV.S(C" + "2" + ":C" + range + ")";
             sheet.Range[5, 12].Formula = "=MIN(C" + "2" + ":C" + range + ")";
             sheet.Range[6, 12].Formula = "=MAX(C" + "2" + ":C" + range + ")";
-
-            
         }
 
          
@@ -281,8 +247,6 @@ namespace Alife
             sheet_shared.Range[simulation.index + 2, 9].Formula = "='" + sheet.Name + "'" + "!I4"; 
             sheet_shared.Range[simulation.index + 2, 10].Formula = "='" + sheet.Name + "'" + "!I5"; 
             sheet_shared.Range[simulation.index + 2, 11].Formula = "='" + sheet.Name + "'" + "!I6";
-            
-
         }
 
         public void Generate_Biomass_Time_Graph(ref Worksheet sheet) //Generate Biomass/Time graph in given sheet

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public class Simulation
+    public class Simulation //This class is a safe-threaded class that handles all of the simulation and the user feedback.
     {
-
         static int index_counter = 0;
         public int index;
         public bool thread_assigned = false;
@@ -19,7 +18,7 @@ namespace Alife
         public ResultsHandler rh;
         public string name;
 
-        public enum Status { Waiting, Running, Writing_Data , Making_Video ,Finished, Aborted,        }
+        public enum Status { Waiting, Running, Writing_Data , Making_Video ,Finished, Aborted,        } //Status of the simulation
 
         public Simulation(Parameters p)
         {
@@ -29,7 +28,6 @@ namespace Alife
             parameters = p;
             p.fullpath = p.path + "\\" + GetStringName() + "\\"; 
             currentstatus = Status.Waiting;
-   
             index_counter++;
         }
 
@@ -53,7 +51,6 @@ namespace Alife
             currentstatus = Status.Running;
             Run_Simulation();
 
-            
             rh = new ResultsHandler(this);
             currentstatus = Status.Writing_Data;
             rh.WriteData();
@@ -62,9 +59,6 @@ namespace Alife
             currentstatus = Status.Finished;
             threadid = -1;
             thread_assigned = false;
-
-            
-            
         }
 
         public void Run_Simulation()
@@ -76,7 +70,7 @@ namespace Alife
 
 
 
-        public string GetProgress()
+        public string GetProgress() //returns simulation progress
         {
             if (driver == null)
             {
@@ -151,12 +145,7 @@ namespace Alife
                 driver.Require_Stop();
                 currentstatus = Status.Aborted;
             }
-
-
         }
-
-
-
     }
 
 }

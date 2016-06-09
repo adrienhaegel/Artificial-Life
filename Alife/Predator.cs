@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public class Predator : Gridable, Animal
+    public class Predator : Gridable //This class implements a predator. For comments check prey class
     {
         [ThreadStatic]
         public static Parameters parameters;
