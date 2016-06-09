@@ -10,7 +10,7 @@ namespace Alife
 
     public class Driver  //This is the main class where all the calculations are done. 
     {
-  
+
         public object lockiteration; //LOCK for threading: is locked when the driver is in an iteration, is freed at the end of each iteration.
 
         private volatile bool stop_required; // The driver has been asked to stop. Will terminate once the iteration is complete.
@@ -31,14 +31,14 @@ namespace Alife
         public int result_counter; //This counter is used to return the results of the algorithm after a given nb of iterations.
         public Queue<Result> queueresults;
 
-        int image_counter = 0;
+        int image_counter = 0; //counter for exported images names
 
+        //Result class is the exported data, containing biomass and time
         public class Result
         {
             public double time;
             public double preybiomass;
             public double predatorbiomass;
-           
         }
 
 
@@ -145,8 +145,8 @@ namespace Alife
                 watch.Stop();
                 this.executiontime = watch.ElapsedMilliseconds;
                 Niter += 1;
-                
-               
+
+
                 this.currenttime += parameters.timestep;
                 if (parameters.final_time_stop)
                 {
@@ -155,10 +155,9 @@ namespace Alife
                         Require_Stop();
                     }
                 }
-
             }
 
-            if (result_counter == 0)
+            if (result_counter == 0) //When the result counter is reached, save the results
             {
                 result_counter = parameters.result_frequency;
                 Add_Result_to_Queue();
@@ -166,7 +165,7 @@ namespace Alife
             result_counter -= 1;
         }
 
-        public void Add_Result_to_Queue()
+        public void Add_Result_to_Queue() //Adds the current simulation to the results
         {
             Result res = new Result();
             res.preybiomass = ReturnPreyBiomass();
@@ -174,33 +173,24 @@ namespace Alife
             res.time = ReturnCurrentTime();
 
             Export_Spatial_Screenshot();
-
-            
+            if (res.preybiomass == 0)
+            {
+                stop_required = true;
+            }
+            if (res.predatorbiomass == 0)
+            {
+                stop_required = true;
+            }
             queueresults.Enqueue(res);
-
-
         }
 
-        public void Export_Spatial_Screenshot()
+        public void Export_Spatial_Screenshot() //Export an image of the simulation
         {
-
             System.Windows.Forms.DataVisualization.Charting.Chart chart;
             chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-
-
             System.IO.Directory.CreateDirectory(parameters.fullpath + "\\images\\");
-
-
-
-            SpatialGraphToFile imageform = new SpatialGraphToFile(Return_Preys_UI(), Return_Preds_UI(), ReturnCurrentTime() ,parameters, image_counter, parameters.fullpath);
-
-
-                image_counter++;
-
-
-            
-        
-
+            SpatialGraphToFile imageform = new SpatialGraphToFile(Return_Preys_UI(), Return_Preds_UI(), ReturnCurrentTime(), parameters, image_counter, parameters.fullpath);
+            image_counter++;
         }
 
         public void Reproduce() //Reproduce preys and predators. Natural birth + hunting
@@ -367,7 +357,7 @@ namespace Alife
             lock (lockiteration) //The List should not be modified while it is returned to the UI: Only between iterations
             {
                 List<Prey> list = new List<Prey>();
-                foreach(Prey p in this.preys.ToList())
+                foreach (Prey p in this.preys.ToList())
                 {
                     list.Add(p.Copy());
                 }

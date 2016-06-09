@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alife
 {
-    public class Prey : Animal,Gridable //This class implements a prey
+    public class Prey : Gridable //This class implements a prey
     {
         [ThreadStatic]
         public static Parameters parameters; //the parameters used

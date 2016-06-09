@@ -17,7 +17,9 @@ namespace Alife
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new RealTimeSimulation());
-            Application.Run(new Form1());
+            Application.Run(new Threads_User());
+
+
         }
     }
 }
