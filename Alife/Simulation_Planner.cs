@@ -65,7 +65,7 @@ namespace Alife
             double[] fertilityvariation = {0.005,0.01,  0.025,  0.05,0.075,0.1,0.2};
 
             double[] delay = { 40 };
-            double[] speedage = { 0, 0.1, 0.2, 0.4, 0.6};
+            double[] speedage = { 0, 0.01, 0.02, 0.04, 0.06,0.1};
             foreach (double speed in speedage)
             {
                 foreach (double del in delay)
